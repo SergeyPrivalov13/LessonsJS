@@ -1,21 +1,12 @@
-let money = 50000,                                    // Доход за месяц
-  income = 'фрилансер',                               // Дополнительный доход
-  addExpenses = 'Интернет, Такси, Коммуналка',        // Дополнительные расходы
-  deposit = true,
-  mission = 20000,                                    // Сумма накоплений
-  period = 4,
-  budgetDay = money / 30;                             // Дневной бюджет
+let num = 266219,
+  sum = 1;                                  // Переменная для результата произведения чисел
 
-console.log(typeof (money));
-console.log(typeof (income));
-console.log(typeof (deposit));
+num = num.toString().split('');             // Преобразуем число  встроку и разбиваем её на массив
 
-console.log(addExpenses.length);
+for (let i = 0; i < num.length; i++) {      // Цикл для произведения чисел
+  sum *= +num[i];
+}
 
-console.log('Период равен ' + period + ' месяцев');
-console.log('Цель заработать ' + mission + ' рублей/долларов/гривен/юани');
+sum = (sum ** 3).toString().substr(0, 2);   // Возводим в степень, преобразуем в строку и выводим первые 2 символа
 
-console.log(addExpenses.toLowerCase().split(', '));
-
-console.log(budgetDay);
-
+console.log(sum);
