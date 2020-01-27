@@ -28,7 +28,7 @@ console.log(addExpenses.length);
 console.log(`Период равен ${period} ${declOfNum(period, month)}`);
 console.log('Цель заработать ' + mission + ' рублей/долларов/гривен/юани');
 
-console.log(addExpenses.toLowerCase().split(', '));
+console.log(addExpenses.toLowerCase().split(/,\s*/));
 
 console.log('Бюджет на месяц ' + budgetMonth);
 console.log(`Цель будет достигнута за: ${period} ${declOfNum(period, month)}`);
@@ -46,9 +46,9 @@ if (budgetDay > 1200) {
 
 //console.log('Доход за месяц: ' + money );
 //console.log('Депозит ' + deposit);
-//console.log('Расходы ' + expenses1);
+//console.log(expenses1.toLowerCase().split(', '));
 //console.log('Сумма расходов ' + amount1);
-//console.log('Расходы ' + expenses2);
+//console.log(expenses2.toLowerCase().split(', '));
 //console.log('Сумма расходов ' + amount2);
 
 
