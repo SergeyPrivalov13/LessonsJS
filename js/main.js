@@ -49,4 +49,6 @@ if (namePerson === 'артём') {
   console.log('студент');  
 }
 
-namePerson === 'артём' ? console.log('директор') : namePerson === 'максим' ? console.log('преподаватель') : console.log('студент');
+namePerson === 'артём' ? console.log('директор') 
+: namePerson === 'максим' ? console.log('преподаватель') 
+: console.log('студент');
