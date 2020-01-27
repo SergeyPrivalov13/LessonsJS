@@ -38,17 +38,19 @@ console.log(langs[lang]);
 
 
 // Задание 2
-let namePerson = 'максим';
+let namePerson = 'артём';
 namePerson = namePerson.toLowerCase();
 
-if (namePerson === 'артём') {
+/* if (namePerson === 'артём') {
   console.log('директор');  
 } else if (namePerson === 'максим') {
   console.log('преподаватель');  
 } else {
   console.log('студент');  
-}
+} */
 
-namePerson === 'артём' ? console.log('директор') 
-: namePerson === 'максим' ? console.log('преподаватель') 
-: console.log('студент');
+console.log(namePerson === 'артём' ? 'директор' 
+: namePerson === 'максим' ? 'преподаватель' 
+: 'студент');
+
+
