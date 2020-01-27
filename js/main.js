@@ -2,7 +2,7 @@
 
 // Задание 1
 
-let lang = 'en',
+let lang = prompt('Введите язык ru или en'),
   langs = {
     ru: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
     en: ['Monday', 'Tuesday', 'Wednes­day', 'Thursday', 'Friday', 'Saturday', 'Sunday']
