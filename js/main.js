@@ -34,7 +34,7 @@ const declOfNum = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%
 const declOfMon = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
   moneys = ['рубль', 'рубля', 'рублей'];
 
-let showTypeOf = function(data){
+const showTypeOf = function(data){
   console.log(data, typeof(data));  
 };
 showTypeOf(money);
@@ -42,7 +42,7 @@ showTypeOf(income);
 showTypeOf(deposit);
 
 // Расходы за месяц
-let getExpensesMonth = function(){
+const getExpensesMonth = function(){
   return amount1 + amount2;
 };
 console.log(`Расходы за месяц: ${getExpensesMonth()} ${declOfMon(getExpensesMonth(), moneys)}`);
@@ -51,7 +51,7 @@ console.log(`Расходы за месяц: ${getExpensesMonth()} ${declOfMon(g
 console.log(addExpenses.toLowerCase().split(/,\s*/));
 
 // Функция возвращает накопления за месяц
-let getAccumulatedMonth = function (){
+const getAccumulatedMonth = function (){
   // Объявляем переменную и присваиваем ей резултьтат
   let accumulatedMonth = money - getExpensesMonth();
   return accumulatedMonth;
@@ -59,26 +59,25 @@ let getAccumulatedMonth = function (){
 console.log(`Накопления за месяц: ${getAccumulatedMonth()} ${declOfMon(getAccumulatedMonth(), moneys)}`);
 
 // Бюджет на день
-let getBudgetDay = function(){
-  let budgetDay = getAccumulatedMonth() / 30 ;
-  return budgetDay;
+const getBudgetDay = function(){
+  return getAccumulatedMonth() / 30 ;
 };
 console.log(`Бюджет на день: ${getBudgetDay()} ${declOfMon(getBudgetDay(), moneys)}`);
 
-
 // Cрок достижения цели в месяцах
-let getTargetMonth = function(){
+const getTargetMonth = function(){
   return Math.ceil(mission / getAccumulatedMonth());
 }; 
 console.log(`Cрок достижения цели в месяцах: ${getTargetMonth()} ${declOfNum(getTargetMonth(), month)}`);
 
 // Уровень дохода
-let getStatusIncome = function(){
-  if (getBudgetDay() > 1200) {
+const getStatusIncome = function(){
+  let budgetDay = getBudgetDay();
+  if (budgetDay > 1200) {
     return('У вас высокий уровень дохода!');  
-  } else if (getBudgetDay() > 600 && getBudgetDay() < 1200) {
+  } else if (budgetDay > 600 && budgetDay < 1200) {
     return('У вас средний уровень дохода');  
-  } else if (getBudgetDay() >= 0 && getBudgetDay() < 600) {
+  } else if (budgetDay >= 0 && budgetDay < 600) {
     return('К сожалению у вас уровень дохода ниже среднего');  
   } else {
     return('Что то пошло не так');  
