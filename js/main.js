@@ -7,7 +7,7 @@ let v1 = "   Eveniet omnis repellat  ",
 function text (val) {
   let textStr = typeof val;                            /* Опредиляем тип */
   if ( textStr === 'string') {                         /* Если тип Строка */
-    val = val.replace(/^\s*/,'').replace(/\s*$/,'');   /* Удаляем пробелы в начале и конце строки */
+    val = val.trim();                                  /* Удаляем пробелы в начале и конце строки */
     if (val.length >= 30) {                            /* Опредиляем количество символов */
       val = val.slice(0, 30) + " ...";                 /* Если символов > 30 */
       return (val);      
@@ -19,4 +19,4 @@ function text (val) {
   }  
 }
 
-console.log(">" + text(v3) + "<");
+console.log(">" + text(v1) + "<");
