@@ -77,10 +77,35 @@ function check(val){
 
 
 
-  
+
   return val;
   
 
 }
 console.log(check(question));
 
+
+function guessTheNumber() {
+
+  function getRandomNumber() {
+    
+  }
+  let number = getRandomNumber();
+
+  function guess() {
+
+  }
+
+  let count = 23;
+  function checkCounter() {
+
+  }
+
+  function endGame() {
+
+  }
+
+  return guess();
+
+}
+guessTheNumber();
