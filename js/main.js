@@ -7,13 +7,40 @@ function guessTheNumber() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }  
   let number = getRandomInRange(1, 100);
-  console.log(number);  
+  console.log(number); 
+  
+  let isNumber = function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  };
 
   // Функция проверки
   function guess() {    
     let numberUser = prompt('Угадай число от 1 до 100');
 
-    if (Boolean(numberUser) === true ){
+    if (numberUser === null) {
+      console.log('Нажали Отмена');
+      alert('Игра оконченна');
+    } else if(isNumber(numberUser)){
+      console.log(numberUser);
+      console.log(typeof(numberUser));
+
+      numberUser = +numberUser;
+
+      if(numberUser > number) {
+        console.log('Загаданное число меньше');
+        guess(); 
+      } else if(numberUser < number) {
+        console.log('Загаданное число больше');
+        guess();  
+      } else{
+        console.log('Вы угадали!!!');
+        return;
+      }      
+    } else {
+      console.log('Введите число');
+      guess();     
+    }
+    /* if (Boolean(numberUser) === true ){
       console.log('Что то ввели');
       numberUser = numberUser.trim();
       if(numberUser === ''){
@@ -34,11 +61,11 @@ function guessTheNumber() {
       } else {
         console.log('Нажали OK с пустой строкой');  
       }  
-    }
-
+    } */
   }
 
   return guess();
 
 }
-guessTheNumber();
+let guess = guessTheNumber();
+guess();
