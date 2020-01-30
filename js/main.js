@@ -28,16 +28,21 @@ function guessTheNumber() {
 
       if(numberUser > number) {
         console.log('Загаданное число меньше');
+        alert('Загаданное число меньше');
         guess(); 
       } else if(numberUser < number) {
         console.log('Загаданное число больше');
+        alert('Загаданное число больше');
         guess();  
       } else{
         console.log('Вы угадали!!!');
+        alert('Вы угадали!!!');
         return;
       }      
     } else {
       console.log('Введите число');
+      
+      alert('Введите число');
       guess();     
     }
     /* if (Boolean(numberUser) === true ){
