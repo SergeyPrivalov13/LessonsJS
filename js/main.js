@@ -1,8 +1,4 @@
 'use strict';
-let v1 = "   Eveniet omnis repellat  ",
-    v2 = 2,
-    v3 = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet omnis repellat dignissimos nisi officia sapiente necessitatibus alias voluptate assumenda incidunt quasi, esse sequi architecto blanditiis porro saepe! Maiores numquam nesciunt architecto mollitia accusamus totam sint! Laudantium nemo asperiores itaque pariatur?",
-    v4 = null;
 
 function text (val) {
   let textStr = typeof val;                            /* Опредиляем тип */
@@ -19,4 +15,12 @@ function text (val) {
   }  
 }
 
-console.log(">" + text(v1) + "<");
+[
+  "   Eveniet omnis repellat  ",
+  2,
+  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet omnis repellat dignissimos nisi officia sapiente necessitatibus alias voluptate assumenda incidunt quasi, esse sequi architecto blanditiis porro saepe! Maiores numquam nesciunt architecto mollitia accusamus totam sint! Laudantium nemo asperiores itaque pariatur?",
+  null
+].forEach(function(item){
+  console.log(">" + text(item) + "<");
+});
+
