@@ -1,9 +1,2 @@
-let money,
-  income,
-  addExpenses,
-  deposit,
-  mission,
-  period;
+'use strict';
 
-alert('Hello');
-console.log('Hello World');
