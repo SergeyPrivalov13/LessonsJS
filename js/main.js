@@ -20,7 +20,7 @@ const start = function(){
 };
 start();
 
-let appData = {    
+const appData = {    
     // Дополнительные доходы - объект
     income: {},
     // Перечисление доп. дохдов - массив
@@ -147,9 +147,13 @@ console.log(appData.expenses);
 console.log(appData.addExpenses);
 
 console.log(`Дополнительные доходы ${appData.income}`);
+console.log(appData.income);
 console.log(`Перечисление доп. дохдов ${appData.addIncome}`);
+console.log(appData.addIncome);
 console.log(`Дополнительные рассходы ${appData.expenses}`);
+console.log(appData.expenses);
 console.log(`Возможные расходы ${appData.addExpenses}`);
+console.log(appData.addExpenses);
 console.log(`Депозит ${appData.deposit}`);
 console.log(`Цель накопить ${appData.mission}`);
 console.log(`Cрок достижения цели в месяцах ${appData.period}`);
