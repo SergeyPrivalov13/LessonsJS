@@ -40,37 +40,13 @@ function guessTheNumber() {
         return;
       }      
     } else {
-      console.log('Введите число');
-      
+      console.log('Введите число'); 
       alert('Введите число');
       guess();     
     }
-    /* if (Boolean(numberUser) === true ){
-      console.log('Что то ввели');
-      numberUser = numberUser.trim();
-      if(numberUser === ''){
-        console.log('Пустая строка'); 
-      } else {
-        console.log('Ввели даные');  
-        if(+numberUser > number) {
-          console.log('Загаданное число меньше'); 
-        } else if(+numberUser < number) {
-          console.log('Загаданное число больше');  
-        } else{
-          console.log('Вы угадали!!!');
-        }    
-      }
-    } else {  
-      if(numberUser === null){
-        console.log('Нажали Отмена');  
-      } else {
-        console.log('Нажали OK с пустой строкой');  
-      }  
-    } */
   }
-
   return guess();
 
 }
 let guess = guessTheNumber();
-guess();
+
