@@ -30,7 +30,7 @@ function guessTheNumber() {
         guess();  
       } else{
         alert('Вы угадали!!!');
-        return;
+        guess();
       }      
     } else {
       alert('Введите число');
