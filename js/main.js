@@ -46,7 +46,6 @@ function guessTheNumber() {
     }
   }
   return guess();
-
 }
 let guess = guessTheNumber();
 
