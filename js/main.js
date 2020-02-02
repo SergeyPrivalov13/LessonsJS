@@ -119,7 +119,7 @@ let programIncludes = function() {
     console.log(key + ' : ' + appData[key]);    
   }
 };
-//programIncludes();
+programIncludes();
 
 appData.asking();                 // Объявляем свойство ascing
 appData.getExpensesMonth();       // Объявляем свойство getExpensesMonth
@@ -130,13 +130,15 @@ appData.getStatusIncome();        // Объявляем свойство getStat
 
 
 console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfMon(appData.expensesMonth, moneys)}`);
+console.log(`${appData.getTargetMonth()}`);
+console.log(appData.getStatusIncome());
 
+/* 
 console.log(`Накопления за месяц: ${appData.budgetMonth} ${declOfMon(appData.budgetMonth, moneys)}`);
 
 // Cрок достижения цели в месяцах:
 console.log(`${appData.getTargetMonth()}`);
 // Уровень дохода
-console.log(appData.getStatusIncome());
 
 console.log(`Бюджет на день: ${appData.budgetDay} ${declOfMon(appData.budgetDay, moneys)}`);
 
@@ -160,5 +162,4 @@ console.log(`Cрок достижения цели в месяцах ${appData.p
 console.log(`Доход за месяц ${appData.budget}`);
 console.log(`Бюджет на день ${appData.budgetDay}`);
 console.log(`Бюджет на месяц ${appData.budgetMonth}`);
-console.log(`Расходы за месяц ${appData.expensesMonth}`);
-
+console.log(`Расходы за месяц ${appData.expensesMonth}`); */
