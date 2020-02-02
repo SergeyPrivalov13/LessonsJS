@@ -1,16 +1,26 @@
 'use strict';
 let week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'], 
   date = new Date(),
-  presentDay = date.getDay(),
+  presentDay = date.getDay() + 6,
   blockWeek = document.getElementById('week');
 
-for(let i = 0; i < week.length; i++){
-  console.log(week[i]);
-  blockWeek = blockWeek.innerHTML(week[i]);
+  for(let i = 0; i < week.length; i++){  
+    console.log(presentDay);
+    
+  if(presentDay === i){
+    if(i === 5 || i === 6){
+      blockWeek.innerHTML += `<i><b>${week[i]}</b></i> <br>`;
+    }else {
+      blockWeek.innerHTML += `<b>${week[i]}</b> <br>`;
+    }
+    
+  } else if(i === 5 || i === 6){
+    //document.write(`<i>${week[i]}</i> <br>`);
+    blockWeek.innerHTML += `<i>${week[i]}</i> <br>`;
+  } else{
+    blockWeek.innerHTML += `${week[i]} <br>`;
+  }
+  
   
 }
 
-console.log(date);
-console.log(presentDay);
-console.log(week);
-console.log(blockWeek);
