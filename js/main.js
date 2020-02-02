@@ -29,8 +29,7 @@ function guessTheNumber() {
         alert('Загаданное число больше');
         guess();  
       } else{
-        alert('Вы угадали!!!');
-        guess();
+        alert('Вы угадали!!!');        
       }      
     } else {
       alert('Введите число');
@@ -40,4 +39,3 @@ function guessTheNumber() {
   return guess();
 }
 guessTheNumber();
-
