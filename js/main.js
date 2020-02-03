@@ -15,7 +15,7 @@ const declOfMon = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%
 let money;  // Доход за месяц
 const start = function(){
   do {
-    money = prompt('Ваш месячный доход?');    
+    money = prompt('Ваш месячный доход?', 50000);    
   } while (!isNumber(money));
 };
 start();
