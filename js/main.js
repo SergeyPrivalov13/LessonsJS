@@ -4,28 +4,13 @@ let isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-let addExpenses;
-do {
-  // Дополнительные расходы
-  addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартира, Машина');
-  // Записываем результат в массив - Возможные расходы
-  addExpenses = addExpenses.toLowerCase().split(',');
-  for(let i = 0; i < addExpenses.length; i++){
-    let addExpens = addExpenses[i].trim();
-    console.log(addExpens);
-    
-  }
-} while (isNumber(addExpenses));
-
-console.log(addExpenses); 
-
 //функция для склонения числительный
 // n - число
 // t - массив из 3 вариантов склонения 
 
-/* const declOfNum = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
-  month = ['месяц', 'месяца', 'месяцев'];
-const declOfMon = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
+const declOfNum = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
+  month = ['месяц', 'месяца', 'месяцев'],
+  declOfMon = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
   moneys = ['рубль', 'рубля', 'рублей'];
 
 let money;  // Доход за месяц
@@ -166,17 +151,23 @@ appData.getTargetMonth();         // Объявляем свойство getTarg
 appData.getStatusIncome();        // Объявляем свойство getStatusIncome
 appData.getInfoDeposit();
 
-console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfMon(appData.expensesMonth, moneys)} 
-${typeof(appData.expensesMonth)}`);
+console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfMon(appData.expensesMonth, moneys)}`);
 console.log(`${appData.getTargetMonth()}`);
 console.log(appData.getStatusIncome());
 
-console.log(`Годовой процент ${appData.percentDeposit} ${typeof(appData.percentDeposit)}`);
-console.log(`Заложенная сумма ${appData.moneyDeposit} ${typeof(appData.moneyDeposit)}`);
-console.log(`Сумма накопления за период ${appData.calcSaveMoney()} ${typeof(appData.calcSaveMoney())}`);
+console.log(`Годовой процент ${appData.percentDeposit}`);
+console.log(`Заложенная сумма ${appData.moneyDeposit}`);
+console.log(`Сумма накопления за период ${appData.calcSaveMoney()}`);
 
-console.log(appData.addExpenses); */
+console.log(appData.addExpenses);
 
+let addExpens = [];
+
+for (let key of appData.addExpenses) {
+  addExpens.push(key.trim().charAt(0).toUpperCase() + key.trim().substring(1));
+}
+
+console.log('Возможные расходы: ', addExpens.join(', '));
 
 /* for ( let key in appData) {
   console.log(`Наша программа включает в себя данные: ${key} : ${appData[key]}`);    
