@@ -1,4 +1,79 @@
 'use strict';
+let 
+// Месячный доход
+salaryAmount =document.querySelector('.salary-amount'),
+
+// Дополнительный доход: input 'Наименование'
+incomeTitle = document.querySelector('.income-title'),
+// Дополнительный доход: input 'Сумма'
+incomeAmount = document.querySelector('.income-amount'),
+// Дополнительный доход: Кнопка '+'
+incomeAdd = document.getElementsByTagName('button')[0],
+
+// Возможный доход: input 'Наименование'
+additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
+
+// Обязательные расходы: input 'Наименование'
+expensesTitle = document.querySelector('.expenses-title'),
+// Обязательные расходы: input 'Сумма'
+expensesAmount = document.querySelector('.expenses-amount'),
+// Обязательные расходы: Кнопка '+'
+expensesAdd = document.getElementsByTagName('button')[1],
+
+// Возможные расходы
+additionalExpensesItem = document.querySelector('.additional_expenses-item'),
+
+// Чекбокс депозит
+depositСheck = document.querySelector('#deposit-check'),
+
+// Цель
+targetAmount = document.querySelector('.target-amount'),
+
+// Период расчёта
+periodSelect = document.querySelector('.period-select'),
+
+// Доход за месяц
+budgetMonthValue = document.querySelector('.budget_month-value'),
+// Дневной бюджет
+budgetDayValue = document.querySelector('.budget_day-value'),
+// Расход за месяц
+expensesMonthValue = document.querySelector('.expenses_month-value'),
+// Возможные доходы
+additionalIncomeValue = document.querySelector('.additional_income-value'),
+// Возможные расходы
+additionalExpensesValue = document.querySelector('.additional_expenses-value'),
+// Накопления за период
+incomePeriodValue = document.querySelector('.income_period-value'),
+// Срок достижения цели в месяцах
+targetMonthValue = document.querySelector('.target_month-value'),
+
+// Кнопка Рассчитать
+start = document.getElementById('start'),
+// Кнопка Сбросить
+cancel = document.getElementById('cancel');
+
+
+console.log(salaryAmount);
+console.log(incomeTitle);
+console.log(incomeAmount);
+console.log(incomeAdd);
+console.log(additionalIncomeItem);
+console.log(expensesTitle);
+console.log(expensesAmount);
+console.log(expensesAdd);
+console.log(additionalExpensesItem);
+console.log(depositСheck);
+console.log(targetAmount);
+console.log(periodSelect);
+console.log(budgetMonthValue);
+console.log(budgetDayValue);
+console.log(expensesMonthValue);
+console.log(additionalIncomeValue);
+console.log(additionalExpensesValue);
+console.log(incomePeriodValue);
+console.log(targetMonthValue);
+console.log(start);
+console.log(cancel);
 
 let isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -148,14 +223,14 @@ const appData = {
     }
 };
 
-appData.asking();                 // Объявляем свойство ascing
-appData.getExpensesMonth();       // Объявляем свойство getExpensesMonth
-appData.getBudget();              // Объявляем свойство getBudget
-appData.getTargetMonth();         // Объявляем свойство getTargetMonth
-appData.getStatusIncome();        // Объявляем свойство getStatusIncome
-appData.getInfoDeposit();
+//appData.asking();                 // Объявляем свойство ascing
+//appData.getExpensesMonth();       // Объявляем свойство getExpensesMonth
+//appData.getBudget();              // Объявляем свойство getBudget
+//appData.getTargetMonth();         // Объявляем свойство getTargetMonth
+//appData.getStatusIncome();        // Объявляем свойство getStatusIncome
+//appData.getInfoDeposit();
 
-console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfMon(appData.expensesMonth, moneys)}`);
+/* console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfMon(appData.expensesMonth, moneys)}`);
 console.log(`${appData.getTargetMonth()}`);
 console.log(appData.getStatusIncome());
 
@@ -163,7 +238,7 @@ console.log(`Годовой процент ${appData.percentDeposit}`);
 console.log(`Заложенная сумма ${appData.moneyDeposit}`);
 console.log(`Сумма накопления за период ${appData.calcSaveMoney()}`);
 
-console.log('Возможные расходы: ', appData.addExpenses.join(', '));
+console.log('Возможные расходы: ', appData.addExpenses.join(', ')); */
 
 
 /* for ( let key in appData) {
