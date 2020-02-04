@@ -59,16 +59,16 @@ const appData = {
         let itemIncome,
           cashIncome;  
         do {
+          itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Вязание');
           if(itemIncome === null){
             break;
           } 
-          itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Вязание');
         } while (isNumber(itemIncome) || itemIncome === '');
         do {
+          cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
           if(cashIncome === null){
             break;
           } 
-          cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
         } while (!isNumber(cashIncome));
         appData.income[itemIncome] = cashIncome;
       }
@@ -92,10 +92,10 @@ const appData = {
         if (i === 0) {          
           do {
             expenses = prompt('Введите обязательную статью расходов 1?', 'садик государственный' );
+            count = +prompt('Во сколько это обойдется 1?', 2300);
             if(expenses === null || count === null){
               break;
             }
-            count = +prompt('Во сколько это обойдется 1?', 2300);
             // Записываем в объект expenses
             appData.expenses[expenses] = count;
           } while (!isNumber(count) || isNumber(expenses) || expenses.trim() === '');
@@ -103,10 +103,10 @@ const appData = {
         } else if (i === 1){
           do {
             expenses = prompt('Введите обязательную статью расходов 2?','садик частный');
+            count = +prompt('Во сколько это обойдется 2?', 3400);
             if(expenses === null || count === null){
               break;
             }
-            count = +prompt('Во сколько это обойдется 2?', 3400);
             // Записываем в объект expenses
             appData.expenses[expenses] = count; 
           } while (!isNumber(count) || isNumber(expenses) || expenses.trim() === '');
