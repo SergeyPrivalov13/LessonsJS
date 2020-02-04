@@ -1,26 +1,39 @@
 'use strict';
-let week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'], 
-  date = new Date(),
-  presentDay = date.getDay(),
-  blockWeek = document.getElementById('week');
+let date = document.getElementById('date'),   // id блока
+  dateNow = new Date(),             // Текущее время в миллисекундах
+  year = dateNow.getFullYear(),
+  month = dateNow.getMonth(),
+  day = dateNow.getDate(),
+  hour = dateNow.getHours(),
+  minutes = dateNow.getMinutes(),
+  seconds = dateNow.getSeconds(),
+  fMonth;
 
-  for(let i = 0; i < week.length; i++){  
-    console.log(presentDay);
-    
-  if(presentDay - 1 === i){
-    if(i === 5 || i === 6){
-      blockWeek.innerHTML += `<i><b>${week[i]}</b></i> <br>`;
-    }else {
-      blockWeek.innerHTML += `<b>${week[i]}</b> <br>`;
-    }
-    
-  } else if(i === 5 || i === 6){
-    //document.write(`<i>${week[i]}</i> <br>`);
-    blockWeek.innerHTML += `<i>${week[i]}</i> <br>`;
-  } else{
-    blockWeek.innerHTML += `${week[i]} <br>`;
+switch (month)
+  {
+    case 0: fMonth="января"; break;
+    case 1: fMonth="февраля"; break;
+    case 2: fMonth="марта"; break;
+    case 3: fMonth="апреля"; break;
+    case 4: fMonth="мае"; break;
+    case 5: fMonth="июня"; break;
+    case 6: fMonth="июля"; break;
+    case 7: fMonth="августа"; break;
+    case 8: fMonth="сентября"; break;
+    case 9: fMonth="октября"; break;
+    case 10: fMonth="ноября"; break;
+    case 11: fMonth="декабря"; break;
   }
-  
-  
-}
+date.style.cssText = 'color: red; font-weight: bold';
+date.innerHTML = `Сегодня ${day} ${fMonth} ${year} года`;
+
+
+console.log(date);
+console.log(dateNow);
+console.log(`Секунд: ${seconds} секунда`);
+console.log(`Минут: ${minutes} минута`);
+console.log(`Часов: ${hour} час`);
+console.log(`Дней: ${day}`);
+console.log(`Месяц: ${month}`);
+console.log(`Год: ${year}`);
 
