@@ -84,9 +84,7 @@ let isNumber = function(n){
 // t - массив из 3 вариантов склонения 
 
 const declOfNum = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
-  month = ['месяц', 'месяца', 'месяцев'],
-  declOfMon = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
-  moneys = ['рубль', 'рубля', 'рублей'];
+  decl = [];
 
 /* let money;  // Доход за месяц
 const start = function(){
@@ -126,17 +124,26 @@ const appData = {
     // Вопросы к пользователю
     asking: function(){
       do {
-        appData.budget = prompt('Ваш месячный доход?', 50000);    
+        appData.budget = prompt('Ваш месячный доход?', 50000);
+        if(appData.budget === null){
+          break;
+        }    
       } while (!isNumber(appData.budget));
 
       if(confirm('Есть ли у вас дополнительный зароботок?')){ 
         let itemIncome,
-          cashIncome;   
+          cashIncome;  
         do {
           itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Вязание');
-        } while (isNumber(itemIncome) || itemIncome.trim() === '');
+          if(itemIncome === null){
+            break;
+          } 
+        } while (isNumber(itemIncome) || itemIncome === '');
         do {
           cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
+          if(cashIncome === null){
+            break;
+          } 
         } while (!isNumber(cashIncome));
         appData.income[itemIncome] = cashIncome;
       }
@@ -145,11 +152,15 @@ const appData = {
       do {
         // Дополнительные расходы
         addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартира, Машина');
+        if(addExpenses === null){
+          break;
+        }
         // Записываем результат в массив - Возможные расходы
         appData.addExpenses.push(addExpenses.trim().charAt(0).toUpperCase() + addExpenses.trim().substring(1));
         
       } while (isNumber(addExpenses) || addExpenses.trim() === '');
-              
+      console.log(addExpenses);
+          
       let count,
           expenses;
       for (let i = 0; i < 2; i++){
@@ -157,6 +168,9 @@ const appData = {
           do {
             expenses = prompt('Введите обязательную статью расходов 1?', 'садик государственный' );
             count = +prompt('Во сколько это обойдется 1?', 2300);
+            if(expenses === null || count === null){
+              break;
+            }
             // Записываем в объект expenses
             appData.expenses[expenses] = count;
           } while (!isNumber(count) || isNumber(expenses) || expenses.trim() === '');
@@ -165,6 +179,9 @@ const appData = {
           do {
             expenses = prompt('Введите обязательную статью расходов 2?','садик частный');
             count = +prompt('Во сколько это обойдется 2?', 3400);
+            if(expenses === null || count === null){
+              break;
+            }
             // Записываем в объект expenses
             appData.expenses[expenses] = count; 
           } while (!isNumber(count) || isNumber(expenses) || expenses.trim() === '');
@@ -189,7 +206,7 @@ const appData = {
     getTargetMonth: function(){
       appData.period = Math.ceil(appData.mission / appData.budgetMonth);
       if (appData.period >= 0){
-        return `Cрок достижения цели: ${appData.period} ${declOfNum(appData.period, month)}`;
+        return `Cрок достижения цели: ${appData.period} ${declOfNum(appData.period, ['месяц', 'месяца', 'месяцев'])}`;
       } else {
         return 'Цель не будет достигнута';
       }
@@ -213,7 +230,10 @@ const appData = {
       if(appData.deposit){
         do {
           appData.percentDeposit = prompt('Какой годовой процент?', 10);
-          appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);  
+          appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+          if(appData.percentDeposit === null || appData.moneyDeposit === null){
+            break;
+          }  
         } while (!isNumber(appData.percentDeposit) || !isNumber(appData.moneyDeposit));
       }
     },
@@ -223,14 +243,14 @@ const appData = {
     }
 };
 
-//appData.asking();                 // Объявляем свойство ascing
-//appData.getExpensesMonth();       // Объявляем свойство getExpensesMonth
-//appData.getBudget();              // Объявляем свойство getBudget
-//appData.getTargetMonth();         // Объявляем свойство getTargetMonth
-//appData.getStatusIncome();        // Объявляем свойство getStatusIncome
-//appData.getInfoDeposit();
+appData.asking();                 // Объявляем свойство ascing
+appData.getExpensesMonth();       // Объявляем свойство getExpensesMonth
+appData.getBudget();              // Объявляем свойство getBudget
+appData.getTargetMonth();         // Объявляем свойство getTargetMonth
+appData.getStatusIncome();        // Объявляем свойство getStatusIncome
+appData.getInfoDeposit();
 
-/* console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfMon(appData.expensesMonth, moneys)}`);
+console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfNum(appData.expensesMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
 console.log(`${appData.getTargetMonth()}`);
 console.log(appData.getStatusIncome());
 
@@ -238,7 +258,7 @@ console.log(`Годовой процент ${appData.percentDeposit}`);
 console.log(`Заложенная сумма ${appData.moneyDeposit}`);
 console.log(`Сумма накопления за период ${appData.calcSaveMoney()}`);
 
-console.log('Возможные расходы: ', appData.addExpenses.join(', ')); */
+console.log('Возможные расходы: ', appData.addExpenses.join(', '));
 
 
 /* for ( let key in appData) {
@@ -246,20 +266,15 @@ console.log('Возможные расходы: ', appData.addExpenses.join(', '
 } */
 
 /* 
-console.log(`Накопления за месяц: ${appData.budgetMonth} ${declOfMon(appData.budgetMonth, moneys)}`);
-
+console.log(`Накопления за месяц: ${appData.budgetMonth} ${declOfMon(appData.budgetMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
 // Cрок достижения цели в месяцах:
 console.log(`${appData.getTargetMonth()}`);
 // Уровень дохода
-
-console.log(`Бюджет на день: ${appData.budgetDay} ${declOfMon(appData.budgetDay, moneys)}`);
-
-console.log(`Доход за месяц: ${money} ${declOfMon(money, moneys)}`);
+console.log(`Бюджет на день: ${appData.budgetDay} ${declOfMon(appData.budgetDay, [ 'рубль', 'рубля', 'рублей' ])}`);
+console.log(`Доход за месяц: ${money} ${declOfMon(money, [ 'рубль', 'рубля', 'рублей' ])}`);
 console.log(`Цель: ${appData.mission}`);
-
 console.log(appData.expenses);
 console.log(appData.addExpenses);
-
 console.log(`Дополнительные доходы ${appData.income}`);
 console.log(appData.income);
 console.log(`Перечисление доп. дохдов ${appData.addIncome}`);
