@@ -13,13 +13,13 @@ const declOfNum = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%
   declOfMon = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
   moneys = ['рубль', 'рубля', 'рублей'];
 
-let money;  // Доход за месяц
+/* let money;  // Доход за месяц
 const start = function(){
   do {
     money = prompt('Ваш месячный доход?', 50000);    
   } while (!isNumber(money));
 };
-start();
+start(); */
 
 const appData = {    
     // Дополнительные доходы - объект
@@ -41,7 +41,7 @@ const appData = {
     // Cрок достижения цели в месяцах
     period: 0,
     // Доход за месяц
-    budget: money,
+    budget: 0,
     // Бюджет на день
     budgetDay: 0,
     // Бюджет на месяц
@@ -50,6 +50,9 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     asking: function(){
+      do {
+        appData.budget = prompt('Ваш месячный доход?', 50000);    
+      } while (!isNumber(appData.budget));
 
       if(confirm('Есть ли у вас дополнительный зароботок?')){ 
         let itemIncome,
@@ -68,7 +71,8 @@ const appData = {
         // Дополнительные расходы
         addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартира, Машина');
         // Записываем результат в массив - Возможные расходы
-        appData.addExpenses = addExpenses.toLowerCase().split(',');
+        appData.addExpenses.push(addExpenses.trim().charAt(0).toUpperCase() + addExpenses.trim().substring(1));
+        
       } while (isNumber(addExpenses) || addExpenses.trim() === '');
               
       let count,
@@ -159,15 +163,8 @@ console.log(`Годовой процент ${appData.percentDeposit}`);
 console.log(`Заложенная сумма ${appData.moneyDeposit}`);
 console.log(`Сумма накопления за период ${appData.calcSaveMoney()}`);
 
-console.log(appData.addExpenses);
+console.log('Возможные расходы: ', appData.addExpenses.join(', '));
 
-let addExpens = [];
-
-for (let key of appData.addExpenses) {
-  addExpens.push(key.trim().charAt(0).toUpperCase() + key.trim().substring(1));
-}
-
-console.log('Возможные расходы: ', addExpens.join(', '));
 
 /* for ( let key in appData) {
   console.log(`Наша программа включает в себя данные: ${key} : ${appData[key]}`);    
