@@ -51,6 +51,7 @@ const appData = {
       do {
         appData.budget = prompt('Ваш месячный доход?', 50000);
         if(appData.budget === null){
+          appData.budget = 0;
           break;
         }    
       } while (!isNumber(appData.budget));
@@ -61,12 +62,14 @@ const appData = {
         do {
           itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Вязание');
           if(itemIncome === null){
+            itemIncome = '';
             break;
           } 
-        } while (isNumber(itemIncome) || itemIncome === '');
+        } while (isNumber(itemIncome) || itemIncome.trim() === '');
         do {
           cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
           if(cashIncome === null){
+            cashIncome = 0;
             break;
           } 
         } while (!isNumber(cashIncome));
@@ -76,16 +79,20 @@ const appData = {
       let addExpenses;
       do {
         // Дополнительные расходы
-        addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартира, Машина');
+        addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'карп');
         if(addExpenses === null){
+          addExpenses = 0;
           break;
-        }
+        } 
         // Записываем результат в массив - Возможные расходы
-        appData.addExpenses.push(addExpenses.trim().charAt(0).toUpperCase() + addExpenses.trim().substring(1));
+        addExpenses = addExpenses.split(',');
+        for(let i = 0; i < addExpenses.length; i++){
+          let expens = addExpenses[i].trim();
+          addExpenses[i] = expens.replace(expens.charAt(0), expens.charAt(0).toUpperCase());
+        }
+        appData.addExpenses = addExpenses;
         
-      } while (isNumber(addExpenses) || addExpenses.trim() === '');
-      console.log(addExpenses);
-          
+      } while (isNumber(addExpenses));
       let count,
           expenses;
       for (let i = 0; i < 2; i++){
@@ -94,6 +101,8 @@ const appData = {
             expenses = prompt('Введите обязательную статью расходов 1?', 'садик государственный' );
             count = +prompt('Во сколько это обойдется 1?', 2300);
             if(expenses === null || count === null){
+              expenses = '';
+              count = 0;
               break;
             }
             // Записываем в объект expenses
@@ -105,6 +114,8 @@ const appData = {
             expenses = prompt('Введите обязательную статью расходов 2?','садик частный');
             count = +prompt('Во сколько это обойдется 2?', 3400);
             if(expenses === null || count === null){
+              expenses = '';
+              count = 0;
               break;
             }
             // Записываем в объект expenses
@@ -157,6 +168,8 @@ const appData = {
           appData.percentDeposit = prompt('Какой годовой процент?', 10);
           appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
           if(appData.percentDeposit === null || appData.moneyDeposit === null){
+            appData.percentDeposit = 0;
+            appData.moneyDeposit = 0;
             break;
           }  
         } while (!isNumber(appData.percentDeposit) || !isNumber(appData.moneyDeposit));
@@ -175,7 +188,8 @@ appData.getTargetMonth();         // Объявляем свойство getTarg
 appData.getStatusIncome();        // Объявляем свойство getStatusIncome
 appData.getInfoDeposit();
 
-console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfNum(appData.expensesMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
+console.log(`Расходы за месяц: ${appData.expensesMonth} 
+${declOfNum(appData.expensesMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
 console.log(`${appData.getTargetMonth()}`);
 console.log(appData.getStatusIncome());
 
