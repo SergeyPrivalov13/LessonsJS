@@ -1,5 +1,5 @@
 'use strict';
-let 
+const 
 // Месячный доход
 salaryAmount =document.querySelector('.salary-amount'),
 
@@ -24,7 +24,7 @@ expensesAdd = document.getElementsByTagName('button')[1],
 additionalExpensesItem = document.querySelector('.additional_expenses-item'),
 
 // Чекбокс депозит
-depositСheck = document.querySelector('#deposit-check'),
+depositCheck = document.querySelector('#deposit-check'),
 
 // Цель
 targetAmount = document.querySelector('.target-amount'),
@@ -62,7 +62,7 @@ console.log(expensesTitle);
 console.log(expensesAmount);
 console.log(expensesAdd);
 console.log(additionalExpensesItem);
-console.log(depositСheck);
+console.log(depositCheck);
 console.log(targetAmount);
 console.log(periodSelect);
 console.log(budgetMonthValue);
@@ -75,8 +75,12 @@ console.log(targetMonthValue);
 console.log(start);
 console.log(cancel);
 
-let isNumber = function(n){
+const isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+const isEmpty = function(str) {
+  return (!str || /^\s*$/.test(str));
 };
 
 //функция для склонения числительный
@@ -85,14 +89,6 @@ let isNumber = function(n){
 
 const declOfNum = (n, t) => t[ (n%100>4 && n%100<20)? 2 : [2, 0, 1, 1, 1, 2][(n%10<5)?n%10:5] ],
   decl = [];
-
-/* let money;  // Доход за месяц
-const start = function(){
-  do {
-    money = prompt('Ваш месячный доход?', 50000);    
-  } while (!isNumber(money));
-};
-start(); */
 
 const appData = {    
     // Дополнительные доходы - объект
@@ -126,6 +122,7 @@ const appData = {
       do {
         appData.budget = prompt('Ваш месячный доход?', 50000);
         if(appData.budget === null){
+          appData.budget = 0;
           break;
         }    
       } while (!isNumber(appData.budget));
@@ -136,12 +133,14 @@ const appData = {
         do {
           itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Вязание');
           if(itemIncome === null){
+            itemIncome = '';
             break;
           } 
-        } while (isNumber(itemIncome) || itemIncome === '');
+        } while (isNumber(itemIncome) || isEmpty(itemIncome));
         do {
           cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
           if(cashIncome === null){
+            cashIncome = 0;
             break;
           } 
         } while (!isNumber(cashIncome));
@@ -151,16 +150,21 @@ const appData = {
       let addExpenses;
       do {
         // Дополнительные расходы
-        addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Квартира, Машина');
+        addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'карп');
         if(addExpenses === null){
+          addExpenses = 0;
           break;
-        }
+        } 
         // Записываем результат в массив - Возможные расходы
-        appData.addExpenses.push(addExpenses.trim().charAt(0).toUpperCase() + addExpenses.trim().substring(1));
+        addExpenses = addExpenses.split(',');
+        for(let i = 0; i < addExpenses.length; i++){
+          const expens = addExpenses[i].trim();
+          addExpenses[i] = expens.replace(expens.charAt(0), expens.charAt(0).toUpperCase());
+        }
+        appData.addExpenses = addExpenses;
         
-      } while (isNumber(addExpenses) || addExpenses.trim() === '');
-      console.log(addExpenses);
-          
+        
+      } while (isNumber(addExpenses) || isEmpty(addExpenses));
       let count,
           expenses;
       for (let i = 0; i < 2; i++){
@@ -169,22 +173,26 @@ const appData = {
             expenses = prompt('Введите обязательную статью расходов 1?', 'садик государственный' );
             count = +prompt('Во сколько это обойдется 1?', 2300);
             if(expenses === null || count === null){
+              expenses = '';
+              count = 0;
               break;
             }
             // Записываем в объект expenses
             appData.expenses[expenses] = count;
-          } while (!isNumber(count) || isNumber(expenses) || expenses.trim() === '');
+          } while (!isNumber(count) || isNumber(expenses) || isEmpty(expenses));
         
         } else if (i === 1){
           do {
             expenses = prompt('Введите обязательную статью расходов 2?','садик частный');
             count = +prompt('Во сколько это обойдется 2?', 3400);
             if(expenses === null || count === null){
+              expenses = '';
+              count = 0;
               break;
             }
             // Записываем в объект expenses
             appData.expenses[expenses] = count; 
-          } while (!isNumber(count) || isNumber(expenses) || expenses.trim() === '');
+          } while (!isNumber(count) || isNumber(expenses) || isEmpty(expenses));
         }        
       }
     },
@@ -213,7 +221,7 @@ const appData = {
     },
     // Уровень дохода
     getStatusIncome: function(){
-      let budgetDay = appData.budgetDay;
+      const budgetDay = appData.budgetDay;
       if (budgetDay > 1200) {
         return('У вас высокий уровень дохода!');  
       } else if (budgetDay > 600 && budgetDay < 1200) {
@@ -232,6 +240,8 @@ const appData = {
           appData.percentDeposit = prompt('Какой годовой процент?', 10);
           appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
           if(appData.percentDeposit === null || appData.moneyDeposit === null){
+            appData.percentDeposit = 0;
+            appData.moneyDeposit = 0;
             break;
           }  
         } while (!isNumber(appData.percentDeposit) || !isNumber(appData.moneyDeposit));
@@ -250,7 +260,8 @@ appData.getTargetMonth();         // Объявляем свойство getTarg
 appData.getStatusIncome();        // Объявляем свойство getStatusIncome
 appData.getInfoDeposit();
 
-console.log(`Расходы за месяц: ${appData.expensesMonth} ${declOfNum(appData.expensesMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
+console.log(`Расходы за месяц: ${appData.expensesMonth} 
+${declOfNum(appData.expensesMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
 console.log(`${appData.getTargetMonth()}`);
 console.log(appData.getStatusIncome());
 
