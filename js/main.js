@@ -1,10 +1,7 @@
 'use strict';
 const 
 // Месячный доход
-salaryAmount =document.querySelector('.salary-amount'),
-
-// Дополнительный доход: input 'Наименование'
-incomeTitle = document.querySelector('.income-title');
+salaryAmount =document.querySelector('.salary-amount');
 // Блоки с input
 let incomeItems = document.querySelectorAll('.income-items');
 const// Дополнительный доход: Кнопка '+'
@@ -48,7 +45,9 @@ targetMonthValue = document.querySelector('.target_month-value'),
 // Кнопка Рассчитать
 start = document.getElementById('start'),
 // Кнопка Сбросить
-cancel = document.getElementById('cancel');
+cancel = document.getElementById('cancel'),
+// Все input
+inputAll = document.querySelectorAll('input');
 
 const isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -92,11 +91,7 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     start: function(){
-      if (isEmpty(salaryAmount.value)){
-        alert('Поле "Месячный доход" должно быть заполненно');
-      } else if (!isNumber(salaryAmount.value)){
-        alert('Поле "Месячный доход" должно быть из цифр'); 
-      }
+      
       /* do {
         appData.budget = prompt('Ваш месячный доход?', 50000);
         if(appData.budget === null){
@@ -137,67 +132,64 @@ const appData = {
       // Ещё раз проверяем кол-во элементов
       expensesItems = document.querySelectorAll('.expenses-items');
 
+      // Очистка инпута 
+      cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
+        item.value = '';
+        });
+
       if(expensesItems.length === 3){
         expensesAdd.style.display = 'none';
       }
     },
     // Получаем все расходы и записываем их в объект
     getExpenses: function(){
-      //перебираем все элемениты
+      // Перебираем все элемениты
       expensesItems.forEach(function(item){
         // Обязательные расходы: input 'Наименование'
         let itemExpenses = item.querySelector('.expenses-title').value,
         // Обязательные расходы: input 'Сумма'
           cashExpenses = item.querySelector('.expenses-amount').value;
 
-        if (isEmpty(itemExpenses) || isEmpty(cashExpenses)){
-          alert('Поле "Обязательные расходы" должно быть заполненно');
-        } else if (!isNumber(cashExpenses)){
-          alert('Поле "Обязательные расходы Сумма" должно быть из цифр'); 
-        } else if(isNumber(itemExpenses)){
-          alert('Поле "Обязательные расходы Наименование" должно быть из букв');
-        }else {
-          appData.expenses[itemExpenses] = cashExpenses;
-        }  
+          if (itemExpenses !== '' && cashExpenses !== '') {
+            appData.expenses[itemExpenses] = cashExpenses;
+          } 
       });
-    },
-
-    getIncome: function(){
-      if(confirm('Есть ли у вас дополнительный зароботок?')){ 
-        let itemIncome,
-          cashIncome;  
-        do {
-          itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Вязание');
-          if(itemIncome === null){
-            itemIncome = '';
-            break;
-          } 
-        } while (isNumber(itemIncome) || isEmpty(itemIncome));
-        do {
-          cashIncome = prompt('Сколько в месяц вы на этом зарабатываете?', 10000);
-          if(cashIncome === null){
-            cashIncome = 0;
-            break;
-          } 
-        } while (!isNumber(cashIncome));
-        appData.income[itemIncome] = cashIncome;
-      }
-      for (let key in appData.income){
-        appData.incomeMonth += +appData.income[key];
-      }
-    },
+    },    
 
     // Функция добавления нового блока в Дополнительный доход
     addIncomeBlock: function(){ 
       // Делаем копию всего блока
-      const  cloneIncomeItem = incomeItems[0].cloneNode(true);
+      const cloneIncomeItem = incomeItems[0].cloneNode(true);
       // В родителе перед кнопкой вставляем склонированный элемент
       incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomeAdd);
       // Ещё раз проверяем кол-во элементов
       incomeItems = document.querySelectorAll('.income-items');
 
+      // Очистка инпута
+      cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
+        item.value = '';
+        });
+
       if(incomeItems.length === 3){
         incomeAdd.style.display = 'none';
+      }
+    },
+
+    getIncome: function(){
+      // Перебираем все элемениты
+      incomeItems.forEach(function(item) {
+        // Дополнительный доход: input 'Наименование'
+        let itemIncome = item.querySelector('.income-title').value,
+        // Дополнительный доход: input 'Сумма'
+          cashIncome = item.querySelector('.income-amount').value;
+
+        if (itemIncome !== '' && cashIncome !== '') {
+          appData.income[itemIncome] = cashIncome;
+        }
+      });
+
+      for (let key in appData.income) {
+        appData.incomeMonth += +appData.income[key];
       }
     },
 
@@ -208,11 +200,7 @@ const appData = {
       addExpenses.forEach(function(item){
         let itemValue = item.trim();
         item = itemValue.replace(itemValue.charAt(0), itemValue.charAt(0).toUpperCase());
-        if(isEmpty(item)){
-          alert('Поле "Возможные расходы" должно быть заполненно');  
-        } else if(isNumber(item)){
-          alert('Поле "Возможные расходы" должно быть из букв');
-        }else {
+        if (item !== '') {
           appData.addExpenses.push(item);
         }
       });
@@ -224,11 +212,7 @@ const appData = {
       additionalIncomeItem.forEach(function(item){
         let itemValue = item.value.trim();
         item = itemValue.replace(itemValue.charAt(0), itemValue.charAt(0).toUpperCase());
-        if(isEmpty(item)){
-          alert('Поле "Возможный доход" должно быть заполненно');  
-        } else if(isNumber(item)){
-          alert('Поле "Возможный доход" должно быть из букв');
-        }else {
+        if (itemValue !== '') {
           appData.addIncome.push(item);
         }
       });
@@ -305,45 +289,40 @@ expensesAdd.addEventListener('click', appData.addExpensesBlock);
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
 
 
+/* Ввод только русских букв */
+let input1 = document.querySelectorAll('input[placeholder="Наименование"]'),
+  input2 = document.querySelectorAll('input[placeholder="Название"]');
+input1.forEach(function (item) {
+  item.addEventListener('input', function () {
+    let placeName = item.value,
+      rep = /[-\.;":'a-zA-Z0-9]+$/i;
+    if (rep.test(placeName)) {
+      placeName = placeName.replace(rep, '');
+      item.value = placeName;
+    }
+  });
+});
+input2.forEach(function (item) {
+  item.addEventListener('input', function () {
+    let placeName = item.value,
+      rep = /[-\.;":'a-zA-Z0-9]+$/i;
+    if (rep.test(placeName)) {
+      placeName = placeName.replace(rep, '');
+      item.value = placeName;
+    }
+  });
+});
 
-/* console.log(`Расходы за месяц: ${appData.expensesMonth} 
-${declOfNum(appData.expensesMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
-console.log(`${appData.getTargetMonth()}`);
-console.log(appData.getStatusIncome());
+/* Ввод только цифр */
+let inputSum = document.querySelectorAll('input[placeholder="Сумма"]');
+inputSum.forEach(function (item) {
+  item.addEventListener('input', function () {
+    let placeSum = item.value,
+      rep = /[-\.;":'a-zA-Zа-яА-Я]/;
+    if (rep.test(placeSum)) {
+      placeSum = placeSum.replace(rep, '');
+      item.value = placeSum;
+    }
+  });
+});
 
-console.log(`Годовой процент ${appData.percentDeposit}`);
-console.log(`Заложенная сумма ${appData.moneyDeposit}`);
-console.log(`Сумма накопления за период ${appData.calcSaveMoney()}`);
-
-console.log('Возможные расходы: ', appData.addExpenses.join(', '));
- */
-
-/* for ( let key in appData) {
-  console.log(`Наша программа включает в себя данные: ${key} : ${appData[key]}`);    
-} */
-
-/* 
-console.log(`Накопления за месяц: ${appData.budgetMonth} ${declOfMon(appData.budgetMonth, [ 'рубль', 'рубля', 'рублей' ])}`);
-// Cрок достижения цели в месяцах:
-console.log(`${appData.getTargetMonth()}`);
-// Уровень дохода
-console.log(`Бюджет на день: ${appData.budgetDay} ${declOfMon(appData.budgetDay, [ 'рубль', 'рубля', 'рублей' ])}`);
-console.log(`Доход за месяц: ${money} ${declOfMon(money, [ 'рубль', 'рубля', 'рублей' ])}`);
-console.log(`Цель: ${appData.mission}`);
-console.log(appData.expenses);
-console.log(appData.addExpenses);
-console.log(`Дополнительные доходы ${appData.income}`);
-console.log(appData.income);
-console.log(`Перечисление доп. дохдов ${appData.addIncome}`);
-console.log(appData.addIncome);
-console.log(`Дополнительные рассходы ${appData.expenses}`);
-console.log(appData.expenses);
-console.log(`Возможные расходы ${appData.addExpenses}`);
-console.log(appData.addExpenses);
-console.log(`Депозит ${appData.deposit}`);
-console.log(`Цель накопить ${appData.mission}`);
-console.log(`Cрок достижения цели в месяцах ${appData.period}`);
-console.log(`Доход за месяц ${appData.budget}`);
-console.log(`Бюджет на день ${appData.budgetDay}`);
-console.log(`Бюджет на месяц ${appData.budgetMonth}`);
-console.log(`Расходы за месяц ${appData.expensesMonth}`); */
