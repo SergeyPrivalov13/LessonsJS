@@ -90,12 +90,15 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     start: function(){
-      if (salaryAmount.value === '') {
+      if (salaryAmount.value === '') {    
+        salaryAmount.style.cssText = `border: 2px solid red`;
         // Запрет на нажатие если поле пустое
         alert('Поле "Месячный доход" должно быть заполненно');
-        start.preventDefault();
+        start.disabled = false;
         return;
-      }
+      }  else {        
+        salaryAmount.style.cssText = `border: 1px solid #ff7f63`;
+      } 
       
       // Месячный доход
       appData.budget = +salaryAmount.value;
