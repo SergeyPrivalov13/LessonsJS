@@ -90,27 +90,12 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     start: function(){
-      // Текст с ошибкой
-      let textError = document.querySelector('.textError');
-      function textOpac(){
-        textError.style.opacity = 0;
-      }
       // Проверяем пустое ли поле Месячный доход
       if (salaryAmount.value === '') {
-        start.setAttribute('readOnly','true');
-        if (textError.classList.contains('errorP') === false || textError.classList.contains('errorA') === true){
-          textError.classList.remove('errorA');
-          textError.classList.add('errorP');
-          textError.style.opacity = 1;
-        }        
+        start.setAttribute('readOnly','true');       
         salaryAmount.style.cssText = `border: 2px solid red`;        
         return;
-      } else {  
-        if (textError.classList.contains('errorP') === true){
-          textError.classList.remove('errorP');
-          textError.classList.add('errorA');
-          setTimeout(textOpac, 1000);          
-        }          
+      } else {            
         salaryAmount.style.cssText = `border: 1px solid #ff7f63`;
       }
       
@@ -125,20 +110,12 @@ const appData = {
       appData.getBudget();              // Вызов метода getBudget
       appData.showResult();             // Вызов метода showResult
 
-      start.style.display = 'none';     // После нажатия на Расчитать - кнопка пропадает
-      cancel.style.display = 'block';   // Стновиться видимой
       // Убираем кнопку '+'
       incomeAdd.style.transform = 'translateX(-2000px)';   
       incomeAdd.style.transitionDuration = '500ms';   
       expensesAdd.style.transform = 'translateX(-2000px)';
       expensesAdd.style.transitionDuration = '500ms';
 
-      // Все input в блоке data
-      let data = document.querySelectorAll('.data input[type="text"]');
-      // Делаем не активными input после нажатия Расчитать
-      data.forEach(function(item) {                       
-        item.disabled = true;
-      }); 
     },
     // Функуия Показать результат
     showResult: function(){
@@ -181,20 +158,6 @@ const appData = {
       if(expensesItems.length === 3){
         expensesAdd.style.display = 'none';
       }
-      // Валидация
-      appData.langInput();
-
-      // Очищаем input
-      cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
-        item.value = '';
-        });
-
-      // Удаляем все дополнительные блоки
-      cancel.addEventListener('click', function(){
-        cloneExpensesItem.children[0].value = '';
-        cloneExpensesItem.children[1].value = '';
-        cloneExpensesItem.remove();
-      });
     },
     // Получаем все расходы и записываем их в объект
     getExpenses: function(){
@@ -223,20 +186,7 @@ const appData = {
       if(incomeItems.length === 3){
         incomeAdd.style.display = 'none';
       }
-      // Валидация
-      appData.langInput();
-
-      // Очищаем input
-      cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
-        item.value = '';
-        });
-
-      // Удаляем все дополнительные блоки
-      cancel.addEventListener('click', function(){
-        cloneIncomeItem.children[0].value = '';
-        cloneIncomeItem.children[1].value = '';
-        cloneIncomeItem.remove();
-      });
+      
     },
 
     getIncome: function(){
@@ -347,107 +297,22 @@ const appData = {
       return appData.budgetMonth * +period;
     },
 
-    // Функция валидации цифр и букв
-    langInput: function(){
-      /* Ввод только русских букв */
-      let input1 = document.querySelectorAll('input[placeholder="Наименование"]'),
-        input2 = document.querySelectorAll('input[placeholder="Название"]');
-      input1.forEach(function (item) {
-        item.addEventListener('input', function () {
-          let placeName = item.value,
-            rep = /[-\.;":'a-zA-Z0-9]+$/i;
-          if (rep.test(placeName)) {
-            placeName = placeName.replace(rep, '');
-            item.value = placeName;
-          }
-        });
-      });
-      input2.forEach(function (item) {
-        item.addEventListener('input', function () {
-          let placeName = item.value,
-            rep = /[-\.;":'a-zA-Z0-9]+$/i;
-          if (rep.test(placeName)) {
-            placeName = placeName.replace(rep, '');
-            item.value = placeName;
-          }
-        });
-      });
-
-      /* Ввод только цифр */
-      let inputSum = document.querySelectorAll('input[placeholder="Сумма"]');
-      inputSum.forEach(function (item) {
-        item.addEventListener('input', function () {
-          let placeSum = item.value,
-            rep = /[-\.;":'a-zA-Zа-яА-Я]/;
-          if (rep.test(placeSum)) {
-            placeSum = placeSum.replace(rep, '');
-            item.value = placeSum;
-          }
-        });
-      });
-      
-    },
-
     // Функция для range
     getRange: function() {
       periodAmount.textContent = periodSelect.value;
       return +periodSelect.value;
     },
 
-    // Сброс всех полей
-    reset: function() {
-      inputAll.forEach( function(item) {
-        // Делаем поля активными
-        item.disabled = false;
-        // Пустые все input            
-        item.value = '';
-      });
-
-      // Обнуляем все значения в переменных
-      appData.income = {};
-      appData.incomeMonth = 0;
-      appData.addIncome = [];
-      appData.expenses = {};
-      appData.addExpenses = [];
-      appData.deposit = false;
-      appData.percentDeposit = 0;
-      appData.moneyDeposit = 0;
-      appData.budget = 0;
-      appData.budgetDay = 0;
-      appData.budgetMonth = 0;
-      appData.expensesMonth = 0;
-
-      // Возвращаем Range в начальное состояние
-      periodSelect.value = 0;
-      periodAmount.textContent = 1;
-
-      // Меняем кнопку Сброс на Старт
-      start.style.display = 'block';
-      cancel.style.display = 'none';
-
-      // Добавляем кнопку '+'
-      incomeAdd.style.transform = 'translateX(0)';   
-      incomeAdd.style.transitionDuration = '1ms';   
-      incomeAdd.style.display = 'block';   
-      expensesAdd.style.transform = 'translateX(0)';
-      expensesAdd.style.transitionDuration = '1ms';
-      expensesAdd.style.display = 'block';
-    },
 };
-
-// Вызов метода вылидации
-appData.langInput();
 
       // Обработчики события
 // Для кнопки Рассчитать
 start.addEventListener('click', appData.start);
-// Для кнопки Сбросить
-cancel.addEventListener('click', appData.reset.bind(appData));
 // Для '+' Обязательные расходы
 expensesAdd.addEventListener('click', appData.addExpensesBlock);
 // Для '+' Дополнительный доход
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
-
+// Для ползунка range
 periodSelect.addEventListener('input', appData.getRange);
 
 
