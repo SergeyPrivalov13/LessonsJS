@@ -91,10 +91,10 @@ const appData = {
     // Вопросы к пользователю
     start: function(){
       // Проверяем пустое ли поле Месячный доход
-      if (salaryAmount.value === '') {  
+      if (salaryAmount.value === '') {              
         salaryAmount.style.cssText = `border: 2px solid red`;        
         return;
-      } else {  
+      } else {          
         salaryAmount.style.cssText = `border: 1px solid #ff7f63`;
       }
       
@@ -108,12 +108,7 @@ const appData = {
       appData.getAddIncome();           // Вызов метода getAddIncome
       appData.getBudget();              // Вызов метода getBudget
       appData.showResult();             // Вызов метода showResult
-      
-      // Убираем кнопку '+'
-      incomeAdd.style.transform = 'translateX(-2000px)';   
-      incomeAdd.style.transitionDuration = '500ms';   
-      expensesAdd.style.transform = 'translateX(-2000px)';
-      expensesAdd.style.transitionDuration = '500ms';
+
 
     },
     // Функуия Показать результат
@@ -164,13 +159,6 @@ const appData = {
       cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
         item.value = '';
         });
-
-      // Удаляем все дополнительные блоки
-      cancel.addEventListener('click', function(){
-        cloneExpensesItem.children[0].value = '';
-        cloneExpensesItem.children[1].value = '';
-        cloneExpensesItem.remove();
-      });
     },
     // Получаем все расходы и записываем их в объект
     getExpenses: function(){
@@ -205,14 +193,7 @@ const appData = {
       // Очищаем input
       cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
         item.value = '';
-        });
-
-      // Удаляем все дополнительные блоки
-      cancel.addEventListener('click', function(){
-        cloneIncomeItem.children[0].value = '';
-        cloneIncomeItem.children[1].value = '';
-        cloneIncomeItem.remove();
-      });
+        });  
     },
 
     getIncome: function(){
@@ -368,7 +349,7 @@ const appData = {
     getRange: function() {
       periodAmount.textContent = periodSelect.value;
       return +periodSelect.value;
-    },
+    }
 };
 
 // Вызов метода вылидации
@@ -377,13 +358,11 @@ appData.langInput();
       // Обработчики события
 // Для кнопки Рассчитать
 start.addEventListener('click', appData.start);
-// Для кнопки Сбросить
-cancel.addEventListener('click', appData.reset.bind(appData));
 // Для '+' Обязательные расходы
 expensesAdd.addEventListener('click', appData.addExpensesBlock);
 // Для '+' Дополнительный доход
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
-// Ползунок range
+
 periodSelect.addEventListener('input', appData.getRange);
 
 
