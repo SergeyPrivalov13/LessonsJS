@@ -90,12 +90,23 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     start: function(){
+      start.disabled = true;
+
+      salaryAmount.onchange = function () {
+        if (salaryAmount.value === '') {
+          start.disabled = true;
+        } else {
+          start.disabled = false;
+        }
+      };
+      
       // Проверяем пустое ли поле Месячный доход
       if (salaryAmount.value === '') {
-        start.setAttribute('readOnly','true');       
+        // Заприщаем нажатие кнопки
+        // Делаем рамку поля красной      
         salaryAmount.style.cssText = `border: 2px solid red`;        
         return;
-      } else {            
+      } else { 
         salaryAmount.style.cssText = `border: 1px solid #ff7f63`;
       }
       
@@ -314,5 +325,6 @@ expensesAdd.addEventListener('click', appData.addExpensesBlock);
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
 // Для ползунка range
 periodSelect.addEventListener('input', appData.getRange);
+
 
 
