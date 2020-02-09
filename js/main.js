@@ -90,15 +90,29 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     start: function(){
-      if (salaryAmount.value === '') {    
-        salaryAmount.style.cssText = `border: 2px solid red`;
-        // Запрет на нажатие если поле пустое
-        alert('Поле "Месячный доход" должно быть заполненно');
-        start.disabled = false;
+      // Текст с ошибкой
+      let textError = document.querySelector('.textError');
+      function textOpac(){
+        textError.style.opacity = 0;
+      }
+      // Проверяем пустое ли поле Месячный доход
+      if (salaryAmount.value === '') {
+        start.setAttribute('readOnly','true');
+        if (textError.classList.contains('errorP') === false || textError.classList.contains('errorA') === true){
+          textError.classList.remove('errorA');
+          textError.classList.add('errorP');
+          textError.style.opacity = 1;
+        }        
+        salaryAmount.style.cssText = `border: 2px solid red`;        
         return;
-      }  else {        
+      } else {  
+        if (textError.classList.contains('errorP') === true){
+          textError.classList.remove('errorP');
+          textError.classList.add('errorA');
+          setTimeout(textOpac, 1000);          
+        }          
         salaryAmount.style.cssText = `border: 1px solid #ff7f63`;
-      } 
+      }
       
       // Месячный доход
       appData.budget = +salaryAmount.value;
