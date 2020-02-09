@@ -90,23 +90,11 @@ const appData = {
     expensesMonth: 0,
     // Вопросы к пользователю
     start: function(){
-      start.disabled = true;
-
-      salaryAmount.onchange = function () {
-        if (salaryAmount.value === '') {
-          start.disabled = true;
-        } else {
-          start.disabled = false;
-        }
-      };
-      
       // Проверяем пустое ли поле Месячный доход
-      if (salaryAmount.value === '') {
-        // Заприщаем нажатие кнопки
-        // Делаем рамку поля красной      
+      if (salaryAmount.value === '') {  
         salaryAmount.style.cssText = `border: 2px solid red`;        
         return;
-      } else { 
+      } else {  
         salaryAmount.style.cssText = `border: 1px solid #ff7f63`;
       }
       
@@ -120,7 +108,7 @@ const appData = {
       appData.getAddIncome();           // Вызов метода getAddIncome
       appData.getBudget();              // Вызов метода getBudget
       appData.showResult();             // Вызов метода showResult
-
+      
       // Убираем кнопку '+'
       incomeAdd.style.transform = 'translateX(-2000px)';   
       incomeAdd.style.transitionDuration = '500ms';   
@@ -169,6 +157,20 @@ const appData = {
       if(expensesItems.length === 3){
         expensesAdd.style.display = 'none';
       }
+      // Валидация
+      appData.langInput();
+
+      // Очищаем input
+      cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
+        item.value = '';
+        });
+
+      // Удаляем все дополнительные блоки
+      cancel.addEventListener('click', function(){
+        cloneExpensesItem.children[0].value = '';
+        cloneExpensesItem.children[1].value = '';
+        cloneExpensesItem.remove();
+      });
     },
     // Получаем все расходы и записываем их в объект
     getExpenses: function(){
@@ -197,7 +199,20 @@ const appData = {
       if(incomeItems.length === 3){
         incomeAdd.style.display = 'none';
       }
-      
+      // Валидация
+      appData.langInput();
+
+      // Очищаем input
+      cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
+        item.value = '';
+        });
+
+      // Удаляем все дополнительные блоки
+      cancel.addEventListener('click', function(){
+        cloneIncomeItem.children[0].value = '';
+        cloneIncomeItem.children[1].value = '';
+        cloneIncomeItem.remove();
+      });
     },
 
     getIncome: function(){
@@ -308,23 +323,67 @@ const appData = {
       return appData.budgetMonth * +period;
     },
 
+    // Функция валидации цифр и букв
+    langInput: function(){
+      /* Ввод только русских букв */
+      let input1 = document.querySelectorAll('input[placeholder="Наименование"]'),
+        input2 = document.querySelectorAll('input[placeholder="Название"]');
+      input1.forEach(function (item) {
+        item.addEventListener('input', function () {
+          let placeName = item.value,
+            rep = /[-\.;":'a-zA-Z0-9]+$/i;
+          if (rep.test(placeName)) {
+            placeName = placeName.replace(rep, '');
+            item.value = placeName;
+          }
+        });
+      });
+      input2.forEach(function (item) {
+        item.addEventListener('input', function () {
+          let placeName = item.value,
+            rep = /[-\.;":'a-zA-Z0-9]+$/i;
+          if (rep.test(placeName)) {
+            placeName = placeName.replace(rep, '');
+            item.value = placeName;
+          }
+        });
+      });
+
+      /* Ввод только цифр */
+      let inputSum = document.querySelectorAll('input[placeholder="Сумма"]');
+      inputSum.forEach(function (item) {
+        item.addEventListener('input', function () {
+          let placeSum = item.value,
+            rep = /[-\.;":'a-zA-Zа-яА-Я]/;
+          if (rep.test(placeSum)) {
+            placeSum = placeSum.replace(rep, '');
+            item.value = placeSum;
+          }
+        });
+      });
+      
+    },
+
     // Функция для range
     getRange: function() {
       periodAmount.textContent = periodSelect.value;
       return +periodSelect.value;
     },
-
 };
+
+// Вызов метода вылидации
+appData.langInput();
 
       // Обработчики события
 // Для кнопки Рассчитать
 start.addEventListener('click', appData.start);
+// Для кнопки Сбросить
+cancel.addEventListener('click', appData.reset.bind(appData));
 // Для '+' Обязательные расходы
 expensesAdd.addEventListener('click', appData.addExpensesBlock);
 // Для '+' Дополнительный доход
 incomeAdd.addEventListener('click', appData.addIncomeBlock);
-// Для ползунка range
+// Ползунок range
 periodSelect.addEventListener('input', appData.getRange);
-
 
 
