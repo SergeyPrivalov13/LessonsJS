@@ -66,8 +66,38 @@ let
   // Блок надо сделать
   todo = document.getElementById('todo'),
   // Блок сделано
-  completed = document.getElementById('completed'),
-  // Создаём элемент li
+  completed = document.getElementById('completed');
+
+const todoText =function(){  
+const  // Создаём элемент li
+  todoItem = document.createElement('li'),
+  // Создаём элемент div
+  blockButton = document.createElement('div'),
+  // Создаём элемент button-remove
+  btnRemove = document.createElement('button'),
+  // Создаём элемент button-complete
+  btnComplete = document.createElement('button'); 
+  
+  todoItem.textContent = headerInput.value;
+  
+  todoItem.classList.add('todo-item');
+  blockButton.classList.add('todo-buttons');
+  btnRemove.classList.add('todo-remove');
+  btnComplete.classList.add('todo-complete');
+
+  blockButton.appendChild(btnRemove);
+  blockButton.appendChild(btnComplete);
+  todoItem.appendChild(blockButton);
+
+  todo.insertBefore(todoItem, todo.childNodes[0]);
+
+
+
+  
+};
+
+const completeText =function(){
+  let  // Создаём элемент li
   li = document.createElement('li'),
   // Создаём элемент div
   div = document.createElement('div'),
@@ -78,20 +108,7 @@ let
   // Добавляем класс к li
   li.className = 'todo-item';
   // Добавляем текст к li
-  li.innerHTML = localStorage.getItem('task');
-
-const todoText =function(){    
-  // Выводим в todo
-  todo.prepend(li);
-  div.className = 'todo-buttons';
-  li.append(div);
-  btnRemove.className = 'todo-remove';
-  div.append(btnRemove);
-  btnComplete.className = 'todo-complete';
-  btnRemove.after(btnComplete);
-};
-
-const completeText =function(){  
+  li.innerHTML = localStorage.getItem('task'); 
   completed.prepend(li);
   div.className = 'todo-buttons';
   li.append(div);
@@ -101,12 +118,13 @@ const completeText =function(){
   btnRemove.after(btnComplete);
 };
 
-btnAdd.addEventListener('click', function(){
+btnAdd.addEventListener('click', function(event){
 
-  localStorage.setItem('task', headerInput.value);
+  event.preventDefault();
+  
   todoText();
-
 });
+
 
 
 
