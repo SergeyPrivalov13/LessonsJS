@@ -27,12 +27,12 @@ myBtn.addEventListener('click', function(){
 localStorage.removeItem('myText');
   
 // Если запустить здесь функцию, то введённое значение сохраниться и покажеться в парагрвфе
-showText(); */
+showText();
 
-/* document.cookie = 'имяКлюча=значение';
+document.cookie = 'имяКлюча=значение';
 document.cookie = 'имя2Ключа=значение';
 document.cookie = 'имя3Ключа=значение';
-document.cookie = 'имяКлюча=значение4'; */
+document.cookie = 'имяКлюча=значение4';
 
 // Сохранение cookie до определённой даты
 //document.cookie = 'hope=life; expires=Tue, 7 May 2024 00:00:00 GMT';
@@ -56,4 +56,58 @@ function setCookie(key, value, year, month, day, path, domain, secure){
 
 // Добавляем новую cookie
 setCookie('Привет', 'Мир');
-setCookie('Любимый праздник детей', 'Новый Год', 2021, 1, 1);
+setCookie('Любимый праздник детей', 'Новый Год', 2021, 1, 1); */
+
+let
+  // Кнопка "+"
+  btnAdd = document.getElementById('add'),
+  // Поле ввода
+  headerInput = document.querySelector('.header-input'),
+  // Блок надо сделать
+  todo = document.getElementById('todo'),
+  // Блок сделано
+  completed = document.getElementById('completed'),
+  // Создаём элемент li
+  li = document.createElement('li'),
+  // Создаём элемент div
+  div = document.createElement('div'),
+  // Создаём элемент button-remove
+  btnRemove = document.createElement('button'),
+  // Создаём элемент button-complete
+  btnComplete = document.createElement('button');  
+  // Добавляем класс к li
+  li.className = 'todo-item';
+  // Добавляем текст к li
+  li.innerHTML = localStorage.getItem('task');
+
+const todoText =function(){    
+  // Выводим в todo
+  todo.prepend(li);
+  div.className = 'todo-buttons';
+  li.append(div);
+  btnRemove.className = 'todo-remove';
+  div.append(btnRemove);
+  btnComplete.className = 'todo-complete';
+  btnRemove.after(btnComplete);
+};
+
+const completeText =function(){  
+  completed.prepend(li);
+  div.className = 'todo-buttons';
+  li.append(div);
+  btnRemove.className = 'todo-remove';
+  div.append(btnRemove);
+  btnComplete.className = 'todo-complete';
+  btnRemove.after(btnComplete);
+};
+
+btnAdd.addEventListener('click', function(){
+
+  localStorage.setItem('task', headerInput.value);
+  todoText();
+
+});
+
+
+
+
