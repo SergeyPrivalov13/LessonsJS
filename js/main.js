@@ -187,7 +187,7 @@ AppData.prototype.addExpensesBlock = function(){
   // Очищаем input
   cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
     // Валидация
-    this.langInput();
+    appData.langInput();
     item.value = '';
     });
 
@@ -229,11 +229,9 @@ AppData.prototype.addIncomeBlock = function(){
   }
   
   // Очищаем input
-  cloneIncomeItem.querySelectorAll('input').forEach(function(item, _this) {
-  // Псевдо this когда не можем обратиться к this на прямую
-  const _this = this;
+  cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
     // Валидация
-    _this.langInput();
+    appData.langInput();
     item.value = '';
     });
 
@@ -447,8 +445,6 @@ AppData.prototype.reset = function() {
 };
 
 AppData.prototype.eventListener = function() {
-  // Псевдо this когда не можем обратиться к this на прямую
-  const _this = this;
 // Для кнопки Рассчитать
 start.addEventListener('click', this.start.bind(this));
 // Для кнопки Сбросить
