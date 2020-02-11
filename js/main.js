@@ -186,10 +186,11 @@ AppData.prototype.addExpensesBlock = function(){
   
   // Очищаем input
   cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
-    // Валидация
-    appData.langInput();
     item.value = '';
-    });
+  });
+
+  // Валидация
+  this.langInput();
 
   // Удаляем все дополнительные блоки
   cancel.addEventListener('click', function(){
@@ -230,10 +231,11 @@ AppData.prototype.addIncomeBlock = function(){
   
   // Очищаем input
   cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
-    // Валидация
-    appData.langInput();
     item.value = '';
-    });
+  });
+  
+   // Валидация
+  this.langInput();  
 
   // Удаляем все дополнительные блоки
   cancel.addEventListener('click', function(){
@@ -450,9 +452,9 @@ start.addEventListener('click', this.start.bind(this));
 // Для кнопки Сбросить
 cancel.addEventListener('click', this.reset.bind(this));
 // Для '+' Обязательные расходы
-expensesAdd.addEventListener('click', this.addExpensesBlock);
+expensesAdd.addEventListener('click', this.addExpensesBlock.bind(this));
 // Для '+' Дополнительный доход
-incomeAdd.addEventListener('click', this.addIncomeBlock);
+incomeAdd.addEventListener('click', this.addIncomeBlock.bind(this));
 // Для range
 periodSelect.addEventListener('input', this.getRange);
 };
@@ -462,8 +464,6 @@ const appData = new AppData();
 appData.eventListener();
 // Вызов метода вылидации
 appData.langInput();
-
-console.log(appData);
 
 
 
