@@ -58,7 +58,7 @@ function setCookie(key, value, year, month, day, path, domain, secure){
 setCookie('Привет', 'Мир');
 setCookie('Любимый праздник детей', 'Новый Год', 2021, 1, 1); */
 
-let
+/* let
   // Кнопка "+"
   btnAdd = document.getElementById('add'),
   // Поле ввода
@@ -123,9 +123,151 @@ btnAdd.addEventListener('click', function(event){
   event.preventDefault();
   
   todoText();
+}); */
+
+
+const form = document.querySelector('.todo-control'),
+  headerInput = document.querySelector('.header-input'),
+  todoList = document.getElementById('todo'),
+  completedList = document.getElementById('completed');
+
+// Создаём объект  
+let data = {
+  todo: [],
+  completed: []
+};
+
+// Проверка localStorage на наличие данных
+if(localStorage.getItem('localData')){
+  data = JSON.parse(localStorage.getItem('localData'));
+}
+// Функция пишет в Storage
+const dataUpdateToLocalS = function(){
+  localStorage.setItem('localData', JSON.stringify(data));
+};
+
+const itemRemove = function(elem){
+  const
+    // Родительский элемент 
+    item = elem.parentNode.parentNode,
+    itemParent = item.parentNode,
+    // id родителя
+    id = itemParent.id,
+    // Введённый текст
+    text = item.textContent;
+
+  if(id === 'todo'){
+    data.todo.splice(data.todo.indexOf(text), 1);
+  } else {
+    data.completed.splice(data.completed.indexOf(text), 1);
+  }
+  
+  // Удаляем элемент
+  itemParent.removeChild(item);
+
+  dataUpdateToLocalS();
+  
+};
+const itemComplete = function(elem){
+  const
+    // Родительский элемент 
+    item = elem.parentNode.parentNode,
+    itemParent = item.parentNode,
+    // id родителя
+    id = itemParent.id,
+    // Введённый текст
+    text = item.textContent;
+
+  let target;
+
+  if(id === 'todo'){
+    target = completedList;
+  } else {
+    target = todoList;
+  }
+
+  if(id === 'todo'){
+    data.todo.splice(data.todo.indexOf(text), 1);
+    data.completed.push(text);
+  } else {
+    data.completed.splice(data.completed.indexOf(text), 1);
+    data.todo.push(text);
+  }
+  
+  itemParent.removeChild(item);
+  target.insertBefore(item, target.childNodes[0]);
+
+  dataUpdateToLocalS();
+};
+
+const renderItem = function(text, completed = false){
+  const  // Создаём элемент li
+    item = document.createElement('li'),
+    // Создаём элемент div
+    btnBlock = document.createElement('div'),
+    // Создаём элемент button-remove
+    btnRemove = document.createElement('button'),
+    // Создаём элемент button-complete
+    btnComplete = document.createElement('button'); 
+    
+  let list = todoList;
+  if(completed){
+    list = completedList;
+  } else {
+    list = todoList;
+  }
+
+  item.textContent = text;
+  
+  item.classList.add('todo-item');
+  btnBlock.classList.add('todo-buttons');
+  btnRemove.classList.add('todo-remove');
+  btnComplete.classList.add('todo-complete');
+
+  btnRemove.addEventListener('click', function(event){
+    itemRemove(event.target);
+  });
+
+  btnComplete.addEventListener('click', function(event){
+    itemComplete(event.target);
+  });
+
+  btnBlock.appendChild(btnRemove);
+  btnBlock.appendChild(btnComplete);
+  item.appendChild(btnBlock);
+
+  list.insertBefore(item, list.childNodes[0]);
+
+};
+
+// Функция рендерит данные из storage? если они там есть
+const renderItemsForUpdate = function(){
+  if(!data.todo && !data.complited){
+    return;
+  }
+  for(let i = 0; i < data.todo.length; i++){
+    renderItem(data.todo[i]);
+  }
+  for(let i = 0; i < data.completed.length; i++){
+    renderItem(data.completed[i], true);
+  }
+};
+
+const addItem = function(text) {
+  renderItem(text);
+  headerInput.value = '';
+  data.todo.push(text);
+
+  dataUpdateToLocalS();
+};
+
+// Обработчик клика по кнопке
+form.addEventListener('click', function(even){
+  event.preventDefault();
+
+  if(headerInput.value !== ''){
+    addItem(headerInput.value);
+  }
 });
 
-
-
-
-
+renderItemsForUpdate();
