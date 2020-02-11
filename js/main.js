@@ -1,9 +1,11 @@
-let money,
-  income,
-  addExpenses,
-  deposit,
-  mission,
-  period;
+window.addEventListener('DOMContentLoaded', function() {
 
-alert('Hello');
-console.log('Hello World');
+  const DomElement = function() {
+    this.selector = '';
+    this.height = 0;
+    this.width = 0;
+    this.bg = '';
+    this.fontSize = 0;
+  };
+
+});
