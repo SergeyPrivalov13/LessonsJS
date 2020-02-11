@@ -187,7 +187,7 @@ AppData.prototype.addExpensesBlock = function(){
   // Очищаем input
   cloneExpensesItem.querySelectorAll('input').forEach(function(item) {
     // Валидация
-    appData.langInput();
+    this.langInput();
     item.value = '';
     });
 
@@ -227,11 +227,13 @@ AppData.prototype.addIncomeBlock = function(){
   if(incomeItems.length === 3){
     incomeAdd.style.display = 'none';
   }
-
+  
   // Очищаем input
-  cloneIncomeItem.querySelectorAll('input').forEach(function(item) {
+  cloneIncomeItem.querySelectorAll('input').forEach(function(item, _this) {
+  // Псевдо this когда не можем обратиться к this на прямую
+  const _this = this;
     // Валидация
-    appData.langInput();
+    _this.langInput();
     item.value = '';
     });
 
