@@ -383,6 +383,7 @@ AppData.prototype.langInput = function(){
         item.value = placeName;
       }
     });
+    
   });
 
   /* Ввод только цифр */
