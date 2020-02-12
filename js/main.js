@@ -10,15 +10,15 @@ const DomElement = function() {
   this.fontSize = 0;
   this.text = '';
 };
-
+// Функция определения число/строка
 DomElement.prototype.isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
-
+// Функция определения пустая ли строка
 DomElement.prototype.isEmpty = function(str) {
   return (!str || /^\s*$/.test(str));
 };
-
+// Функция спрашивает у пользователя символ и текст
 DomElement.prototype.getSelector = function() {
   let selectorItem;
   do {
@@ -55,7 +55,7 @@ DomElement.prototype.getSelector = function() {
     console.log('Введите коректное значение');
   }
 };
-
+// Функция для высоты
 DomElement.prototype.getHeight = function() {
   let heightItem;
   do {
@@ -64,7 +64,7 @@ DomElement.prototype.getHeight = function() {
 
   this.height = heightItem;    
 };
-
+// Функция для ширины
 DomElement.prototype.getWidth = function() {
   let widthItem;
   do {
@@ -73,7 +73,7 @@ DomElement.prototype.getWidth = function() {
 
   this.width = widthItem;
 };
-
+// Функция для заднего фона объекта
 DomElement.prototype.getBg = function() {
   let bgItem;
   do {
@@ -92,6 +92,7 @@ DomElement.prototype.getBg = function() {
   } 
   this.bg = bgItem; 
 };
+// Функция для размера шрифта текста
 DomElement.prototype.getFontSize = function() {
   let fontSizeItem;
   do {
@@ -100,7 +101,7 @@ DomElement.prototype.getFontSize = function() {
 
   this.fontSize = fontSizeItem;
 };
-
+// Функция для вывода результата на монитор
 DomElement.prototype.getResult = function() {
   let elemD = document.querySelector('div'),
       elemP = document.querySelector('p');    
@@ -116,7 +117,7 @@ DomElement.prototype.getResult = function() {
   console.log('D', elemD);
   console.log('P', elemP);
 };
-
+// Запускаем все методы
 DomElement.prototype.start = function() {
   this.getSelector();
   this.getHeight();
