@@ -117,6 +117,42 @@ DomElement.prototype.getResult = function() {
   console.log('D', elemD);
   console.log('P', elemP);
 };
+// Функция перемещения объекта
+DomElement.prototype.move = function() { 
+  let elemD = document.querySelector('div'),
+      elemP = document.querySelector('p'),
+      left = 0,
+      top = 0;
+
+  function moves(elem){
+    document.addEventListener('keydown', function(event) {
+      if (event.code === 'ArrowUp') {
+        top -= 10;
+        elem.style.top = `${top}px`;
+        console.log('Вверх');         
+      } else if (event.code === 'ArrowRight') {
+        left += 10;
+        elem.style.left = `${left}px`;
+        console.log('Вправо');          
+      } else if (event.code === 'ArrowDown') {
+        top += 10;
+        elem.style.top = `${top}px`;
+        console.log('Вниз');          
+      } else if (event.code === 'ArrowLeft') {
+        left -= 10;
+        elem.style.left = `${left}px`;
+        console.log('Влево');          
+      }
+    });
+  }
+      
+  if (elemD) {
+    moves(elemD);    
+  } else if (elemP) {
+    moves(elemP);
+  }
+};
+
 // Запускаем все методы
 DomElement.prototype.start = function() {
   this.getSelector();
@@ -125,6 +161,7 @@ DomElement.prototype.start = function() {
   this.getBg();
   this.getFontSize();
   this.getResult();
+  this.move();
 };
 
 const domElement = new DomElement();
