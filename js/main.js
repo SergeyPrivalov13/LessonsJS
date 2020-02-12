@@ -361,7 +361,29 @@ AppData.prototype.calcPeriod = function(period) {
 
 // Функция валидации цифр и букв
 AppData.prototype.langInput = function(){
-  /* Ввод только русских букв */
+
+  /* function appendInputValidation(item, rep){
+    item.addEventListener('input', function () {
+      let placeName = item.value;          
+      if (rep.test(placeName)) {
+        placeName = placeName.replace(rep, '');
+        item.value = placeName;
+      }
+    });
+  }
+
+
+  function addPlaceholderValidators(holder, rep){
+    let input = document.querySelector(holder);
+    input.forEach(appendInputValidation(item));
+  }
+
+  addPlaceholderValidators('input[placeholder="Наименование"]', /[-\.;":'a-zA-Z0-9]+$/i);
+  addPlaceholderValidators('input[placeholder="Название"]', /[-\.;":'a-zA-Z0-9]+$/i);
+  addPlaceholderValidators('input[placeholder="Сумма"]', /[-\.;":'a-zA-Zа-яА-Я]/);
+ */
+
+  //Ввод только русских букв
   let input1 = document.querySelectorAll('input[placeholder="Наименование"]'),
     input2 = document.querySelectorAll('input[placeholder="Название"]');
   input1.forEach(function (item) {
@@ -386,7 +408,7 @@ AppData.prototype.langInput = function(){
     
   });
 
-  /* Ввод только цифр */
+  //Ввод только цифр 
   let inputSum = document.querySelectorAll('input[placeholder="Сумма"]');
   inputSum.forEach(function (item) {
     item.addEventListener('input', function () {
@@ -462,8 +484,7 @@ periodSelect.addEventListener('input', this.getRange);
 
 
 const appData = new AppData();
-appData.eventListener();
-// Вызов метода вылидации
+appData.eventListener();// Вызов метода вылидации
 appData.langInput();
 
 
