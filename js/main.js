@@ -4,7 +4,6 @@ let incomeItems = document.querySelectorAll('.income-items'),
 // Блоки с input Обязательные расходы
 expensesItems = document.querySelectorAll('.expenses-items');
 
-
 const 
 // Месячный доход
 salaryAmount =document.querySelector('.salary-amount'),
@@ -118,8 +117,9 @@ class AppData {
     // Месячный доход
     this.budget = +salaryAmount.value;
   
-    this.getExpenses();            // Вызов метода getExpenses
-    this.getIncome();              // Вызов метода getIncome
+    //this.getExpenses();            // Вызов метода getExpenses
+    //this.getIncome();              // Вызов метода getIncome
+    this.getExpInc();
     this.getExpensesMonth();       // Вызов метода getExpensesMonth
     this.getAddExpenses();         // Вызов метода getAddExpenses
     this.getAddIncome();           // Вызов метода getAddIncome
@@ -197,20 +197,6 @@ class AppData {
       cloneExpensesItem.children[1].value = '';
       cloneExpensesItem.remove();
     });
-  }
-  // Получаем все расходы и записываем их в объект
-  getExpenses() {
-    // Перебираем все элемениты
-    expensesItems.forEach((item) =>{
-      // Обязательные расходы: input 'Наименование'
-      let itemExpenses = item.querySelector('.expenses-title').value,
-      // Обязательные расходы: input 'Сумма'
-        cashExpenses = item.querySelector('.expenses-amount').value;
-  
-        if (itemExpenses !== '' && cashExpenses !== '') {
-          this.expenses[itemExpenses] = cashExpenses;
-        }
-    });
   }    
   
   // Функция добавления нового блока в Дополнительный доход
@@ -241,25 +227,24 @@ class AppData {
       cloneIncomeItem.remove();
     });
   }
-  
-  // Получаем все доп доходы и записываем их в объект
-  getIncome() {
-    // Перебираем все элемениты
-    incomeItems.forEach((item) => {
-      // Дополнительный доход: input 'Наименование'
-      let itemIncome = item.querySelector('.income-title').value,
-      // Дополнительный доход: input 'Сумма'
-        cashIncome = item.querySelector('.income-amount').value;
-  
-      if (itemIncome !== '' && cashIncome !== '') {
-        this.income[itemIncome] = cashIncome;
+
+  // Получаем все расходы и доп доходы
+  getExpInc() {
+    const count = item => {
+      const startStr = item.className.split('-')[0],     
+        itemTitle = item.querySelector(`.${startStr}-title`).value,
+        itemAmount = item.querySelector(`.${startStr}-amount`).value; 
+        if (itemTitle !== '' && itemAmount !== '') {
+          this[startStr][itemTitle] = itemAmount;
+        }  
+      };  
+      incomeItems.forEach(count);
+      expensesItems.forEach(count); 
+      
+      for (let key in this.income) {
+        this.incomeMonth += +this.income[key];
       }
-    });
-  
-    for (let key in this.income) {
-      this.incomeMonth += +this.income[key];
     }
-  }
   
   // Возможные расходы
   getAddExpenses() {
@@ -353,7 +338,6 @@ class AppData {
   
   // Функция валидации цифр и букв
   langInput() {
-  
     //Ввод только русских букв
     let input1 = document.querySelectorAll('input[placeholder="Наименование"]'),
       input2 = document.querySelectorAll('input[placeholder="Название"]');
