@@ -50,7 +50,14 @@ start = document.getElementById('start'),
 // Кнопка Сбросить
 cancel = document.getElementById('cancel'),
 // Все input
-inputAll = document.querySelectorAll('input');
+inputAll = document.querySelectorAll('input'),
+
+// Выпадающий список депозита
+depositBank = document.querySelector('.deposit-bank'),
+// Поле 'Сумма' депозита
+depositAmount = document.querySelector('.deposit-amount'),
+// Поле 'Процент' депозита
+depositPercent = document.querySelector('.deposit-percent');
 
 const isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -123,6 +130,7 @@ class AppData {
     this.getExpensesMonth();       // Вызов метода getExpensesMonth
     this.getAddExpenses();         // Вызов метода getAddExpenses
     this.getAddIncome();           // Вызов метода getAddIncome
+    this.getInfoDeposit();         // Вызов метода getInfoDeposit
     this.getBudget();              // Вызов метода getBudget
     this.showResult();             // Вызов метода showResult
     
@@ -281,8 +289,10 @@ class AppData {
   
   // Функция возвращает накопления за месяц
   getBudget() {
+    // Процент от суммы вложения в  депозит
+    const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
     // Бюджет на месяц записываем в переменную
-    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposit;
     // Бюджет на день
     this.budgetDay = Math.floor(this.budgetMonth / 30);
   }
@@ -310,22 +320,6 @@ class AppData {
       return('Что то пошло не так');  
     }
   }
-  
-  // Депозит в банке
-  getInfoDeposit() {
-    this.deposit = confirm('Есть ли у вас депозит в банке?');
-    if(this.deposit){
-      do {
-        this.percentDeposit = prompt('Какой годовой процент?', 10);
-        this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-        if(this.percentDeposit === null || this.moneyDeposit === null){
-          this.percentDeposit = 0;
-          this.moneyDeposit = 0;
-          break;
-        }  
-      } while (!isNumber(this.percentDeposit) || !isNumber(this.moneyDeposit));
-    }
-  }   
   
   // Сумма накопления за период
   calcSaveMoney() {
@@ -424,6 +418,65 @@ class AppData {
     expensesAdd.style.display = 'block';
   }
   
+  // Депозит в банке
+  getInfoDeposit() {
+    if(this.deposit){
+      // Значение поля процент
+      this.percentDeposit = depositPercent.value;
+      // Значение поля сумма
+      this.moneyDeposit = depositAmount.value;
+      /* do {
+        this.percentDeposit = prompt('Какой годовой процент?', 10);
+        this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+        if(this.percentDeposit === null || this.moneyDeposit === null){
+          this.percentDeposit = 0;
+          this.moneyDeposit = 0;
+          break;
+        }  
+      } while (!isNumber(this.percentDeposit) || !isNumber(this.moneyDeposit)); */
+    }
+  }
+  
+  // Функция определения банка
+  changePercent() {
+    // Value option
+    const valueSelect = this.value;
+    if(valueSelect === 'other'){
+      console.log(valueSelect);
+      
+    } else{
+      depositPercent.value = valueSelect;
+    }
+    
+  }
+  
+  // Депозит
+  depositHundler() {
+    // Если галочка стоит
+    
+    if(depositCheck.checked){
+      // Делаем блок видимым
+      depositBank.style.display = 'block';
+      // Делаем блок видимым
+      depositAmount.style.display = 'block';
+      // Присваиваем значение true
+      this.deposit = true;
+      // Отслеживаем событие нажатой галочки
+      depositBank.addEventListener('change', this.changePercent);
+      
+    } else {
+      depositBank.style.display = 'none';
+      depositAmount.style.display = 'none';
+      depositBank.value = '';
+      depositAmount.value = '';
+      this.deposit = false;
+      // Удаляем событие отслеживания нажатой галочки
+      depositBank.removeEventListener('change', this.changePercent);
+    }
+
+
+  }
+  
   eventListener() {
   // Для кнопки Рассчитать
   start.addEventListener('click', this.start.bind(this));
@@ -435,6 +488,8 @@ class AppData {
   incomeAdd.addEventListener('click', this.addIncomeBlock.bind(this));
   // Для range
   periodSelect.addEventListener('input', this.getRange);
+  // Чекбокс - Депозит
+  depositCheck.addEventListener('change', this.depositHundler.bind(this));
   }
 }
 
