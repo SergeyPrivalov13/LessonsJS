@@ -19,9 +19,6 @@ expensesAdd = document.getElementsByTagName('button')[1],
 // Возможные расходы
 additionalExpensesItem = document.querySelector('.additional_expenses-item'),
 
-// Чекбокс депозит
-depositCheck = document.querySelector('#deposit-check'),
-
 // Цель
 targetAmount = document.querySelector('.target-amount'),
 
@@ -52,6 +49,8 @@ cancel = document.getElementById('cancel'),
 // Все input
 inputAll = document.querySelectorAll('input'),
 
+// Чекбокс депозит
+depositCheck = document.querySelector('#deposit-check'),
 // Выпадающий список депозита
 depositBank = document.querySelector('.deposit-bank'),
 // Поле 'Сумма' депозита
@@ -147,7 +146,12 @@ class AppData {
     // Делаем не активными input после нажатия Расчитать
     data.forEach((item) => {                       
       item.disabled = true;
-    }); 
+    });
+
+    // Выбор банка
+    depositBank.disabled = true;
+    // Чекбокм
+    depositCheck.disabled = true;
   }
 
   // Функуия Показать результат
@@ -332,44 +336,27 @@ class AppData {
   
   // Функция валидации цифр и букв
   langInput() {
-    //Ввод только русских букв
-    let input1 = document.querySelectorAll('input[placeholder="Наименование"]'),
-      input2 = document.querySelectorAll('input[placeholder="Название"]');
-    input1.forEach((item) => {
-      item.addEventListener('input', function () {
-        let placeName = item.value,
-          rep = /[-\.;":'a-zA-Z0-9]+$/i;
-        if (rep.test(placeName)) {
-          placeName = placeName.replace(rep, '');
-          item.value = placeName;
-        }
-      });
-    });
-    input2.forEach((item) => {
-      item.addEventListener('input', function () {
-        let placeName = item.value,
-          rep = /[-\.;":'a-zA-Z0-9]+$/i;
-        if (rep.test(placeName)) {
-          placeName = placeName.replace(rep, '');
-          item.value = placeName;
-        }
-      });
-      
-    });
-  
-    //Ввод только цифр 
-    let inputSum = document.querySelectorAll('input[placeholder="Сумма"]');
-    inputSum.forEach((item) => {
-      item.addEventListener('input', function () {
-        let placeSum = item.value,
-          rep = /[-\.;":'a-zA-Zа-яА-Я]/;
-        if (rep.test(placeSum)) {
-          placeSum = placeSum.replace(rep, '');
-          item.value = placeSum;
-        }
-      });
-    });
-    
+    inputAll.forEach((item) => {
+      if (item.placeholder === 'Наименование' || item.placeholder === 'Название'){
+        item.addEventListener('input', function () {
+          let placeName = item.value,
+            rep = /[-\.;+=@#$%^&*№;":?!<>`~":'a-zA-Z0-9]+$/i;
+          if (rep.test(placeName)) {
+            placeName = placeName.replace(rep, '');
+            item.value = placeName;
+          }
+        });
+      } else {
+        item.addEventListener('input', function () {
+          let placeSum = item.value,
+            rep = /[-\.;+=@#$%^&*№;":?!<>`~`ёЁa-zA-Zа-яА-Я]/;
+          if (rep.test(placeSum)) {
+            placeSum = placeSum.replace(rep, '');
+            item.value = placeSum;
+          }
+        });
+      }
+    });    
   }
   
   // Функция для range
@@ -416,24 +403,40 @@ class AppData {
     expensesAdd.style.transform = 'translateX(0)';
     expensesAdd.style.transitionDuration = '1ms';
     expensesAdd.style.display = 'block';
+
+    // Выбор банка
+    depositBank.disabled = false;
+    //depositCheck.disabled = false;
+    /* // Делаем блоки не видимыми
+    depositBank.style.display = 'none';
+    depositAmount.style.display = 'none';
+    depositPercent.style.display = 'none';
+    // Делаем поля пустыми
+    depositBank.value = '';
+    depositAmount.value = '';
+    depositPercent.value = ''; */
+    console.log(this.deposit);
+    if(depositCheck.checked === true){
+      // Делаем блоки не видимыми
+      depositBank.style.display = 'none';
+      depositAmount.style.display = 'none';
+      depositPercent.style.display = 'none';
+      // Делаем поля пустыми
+      depositBank.value = '';
+      depositAmount.value = '';
+      depositPercent.value = '';
+      depositCheck.checked = false;
+      
+    }
   }
   
   // Депозит в банке
   getInfoDeposit() {
     if(this.deposit){
-      // Значение поля процент
+      // Значение поля выбора банка
       this.percentDeposit = depositPercent.value;
       // Значение поля сумма
-      this.moneyDeposit = depositAmount.value;
-      /* do {
-        this.percentDeposit = prompt('Какой годовой процент?', 10);
-        this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-        if(this.percentDeposit === null || this.moneyDeposit === null){
-          this.percentDeposit = 0;
-          this.moneyDeposit = 0;
-          break;
-        }  
-      } while (!isNumber(this.percentDeposit) || !isNumber(this.moneyDeposit)); */
+      this.moneyDeposit = depositAmount.value;      
     }
   }
   
@@ -442,12 +445,12 @@ class AppData {
     // Value option
     const valueSelect = this.value;
     if(valueSelect === 'other'){
-      console.log(valueSelect);
-      
+      depositPercent.value = '';
+      depositPercent.style.display = 'inline-block';  
     } else{
       depositPercent.value = valueSelect;
-    }
-    
+      depositPercent.style.display = 'none';
+    }  
   }
   
   // Депозит
@@ -456,25 +459,35 @@ class AppData {
     
     if(depositCheck.checked){
       // Делаем блок видимым
-      depositBank.style.display = 'block';
+      depositBank.style.display = 'inline-block';
       // Делаем блок видимым
-      depositAmount.style.display = 'block';
+      depositAmount.style.display = 'inline-block';
       // Присваиваем значение true
       this.deposit = true;
       // Отслеживаем событие нажатой галочки
       depositBank.addEventListener('change', this.changePercent);
       
     } else {
+      // Делаем блоки не видимыми
       depositBank.style.display = 'none';
       depositAmount.style.display = 'none';
+      depositPercent.style.display = 'none';
+      // Делаем поля пустыми
       depositBank.value = '';
       depositAmount.value = '';
+      depositPercent.value = '';
       this.deposit = false;
       // Удаляем событие отслеживания нажатой галочки
       depositBank.removeEventListener('change', this.changePercent);
     }
+  }
 
-
+  // Cообщение об ошибке
+  depositError() {
+    if (+this.value < 0 || +this.value > 100) {
+      alert('Введите корректное значение в поле проценты.');
+      depositPercent.value = '';
+    }
   }
   
   eventListener() {
@@ -490,6 +503,8 @@ class AppData {
   periodSelect.addEventListener('input', this.getRange);
   // Чекбокс - Депозит
   depositCheck.addEventListener('change', this.depositHundler.bind(this));
+  // Поле ввода Проценты
+  depositPercent.addEventListener('input', this.depositError);
   }
 }
 
