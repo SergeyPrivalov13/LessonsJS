@@ -1,9 +1,6 @@
-let money,
-  income,
-  addExpenses,
-  deposit,
-  mission,
-  period;
+document.addEventListener('DOMContentLoaded', () => {
 
-alert('Hello');
-console.log('Hello World');
+console.log('Hello');
+
+
+});
