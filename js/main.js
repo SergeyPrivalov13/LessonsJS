@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
   // Функция Таймера
-  function countTimer(deadLine) {
+  const countTimer = (deadLine) => {
     const
       // Блок с полями
       timerBlock = document.getElementById('timer'),
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timers;
 
     // Функция вычисления оставшегося времени
-    function getTimeRemaning(){
+    const getTimeRemaning = () => {
       const 
       // Текущая дата в миллисекундах
       dateNow = new Date().getTime(),
@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
       hours = Math.floor(timeRemaining / 60 / 60) % 24;
       // Возврвщаем результат
       return {timeRemaining, hours, minutes, seconds};
-    }
+    };
 
     // Таймер для вызова функции каждую секунду
-    function updateClock() {
+    const updateClock = () => {
       // Привязываем вызов функции к переменной
       let timer = getTimeRemaning();      
 
@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         timerBlock.style.color = 'red';
         clearInterval(timers);
       }
-    }
+    };
     timers = setInterval(updateClock, 1000);
-  }
-  countTimer('17 February 2020 17:48:50');
+  };
+  countTimer('17 February 2020 19:00:50');
 
 
 
