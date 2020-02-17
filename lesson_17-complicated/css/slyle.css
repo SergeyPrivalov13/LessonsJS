@@ -1,0 +1,62 @@
+body{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background: url('../img/bg.jpg') no-repeat;
+}
+#girl, #girl2, #airplane{
+  position: relative;
+}
+#girl{
+  width: 2px;
+  top: -100px;
+  left: 83px;
+}
+#girl2{
+  display: none;
+  left: 600px;
+  top: 386px;
+}
+#button{
+  position: fixed;
+  left: 0;
+  top: 200px;
+  display: flex;
+}
+#start, #stop, #reset{
+  border: none;
+  border-radius: 5px;
+  background: #34D2AF;
+  color: dark;
+  font-weight: 900;
+  padding: 10px 20px;
+  margin: 0 4px;
+  width: 100px;
+  cursor: pointer;
+}
+#reset{
+  position: absolute;
+  top: 50px;
+  background: red
+}
+#stop{
+  position: absolute;
+  background:yellow; 
+  display: none; 
+}
+#start{
+  display: block;
+  position: absolute;
+}
+.button-block{
+  position: relative;
+}
+
+h2{
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  text-align: center;
+  color:#ffffff;
+}
