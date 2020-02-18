@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stop.style.display = `none`;
       cancelAnimationFrame(flyInterval);
     }
-    console.log(count);
+    //console.log(count);
   };
   
   start.addEventListener('click', () => {
@@ -43,7 +43,22 @@ document.addEventListener('DOMContentLoaded', () => {
       start.style.display = `block`;   
       stop.style.display = `none`;  
   });
-  reset.addEventListener('click', () => {    
-    window.location.reload();  
+  reset.addEventListener('click', () => {
+    if(count >= 700){
+      count = 0;
+      airplane.style.left = `0`;
+      girl.style.top = `-100px`;
+      girl.style.left = `83px`;
+      girl.style.width = `2px`;
+      girl.style.display = `block`;
+      girl2.style.display = `none`;
+      start.style.display = `block`;
+    } else{
+      count = 0;
+      airplane.style.left = `0`;
+      girl.style.top = `-100px`;
+      girl.style.left = `83px`;
+      girl.style.width = `2px`;
+    }
   });    
 });
