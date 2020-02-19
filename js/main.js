@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
-  // Функция Таймера
+  // Таймер
   const countTimer = (deadLine) => {
     const
       // Блок с полями
@@ -54,9 +54,112 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     timers = setInterval(updateClock, 1000);
   };
-  countTimer('17 February 2020 19:00:50');
+  countTimer('5 May 2020 19:00:50');
 
+  // Меню
+  const toggleMenu = () => {
+    const
+      // Кнопка Меню
+      btnMenu = document.querySelector('.menu'),
+      // Блок с меню
+      menu = document.querySelector('menu'),
+      // Крестик закрытия окна
+      btnClose = document.querySelector('.close-btn'),
+      // Список меню
+      menuItem = menu.querySelectorAll('ul>li');
+    
+    // Функция отселживает translateX
+    const handlerMenu = () => {
+      /* if(!menu.style.transform || menu.style.transform === `translateX(-100%)`){
+        menu.style.transform = `translateX(0)`;
+      } else {
+        menu.style.transform = `translateX(-100%)`;
+      } */
+      menu.classList.toggle('active-menu');
+    };
+      
+      // Клик по меню
+      btnMenu.addEventListener('click', handlerMenu);
 
+      // Клик по крестику
+      btnClose.addEventListener('click', handlerMenu);
+
+      // Отслеживаем клик по пунктам меню
+      menuItem.forEach((elem) => {
+        elem.addEventListener('click', handlerMenu);
+      });      
+  };
+  toggleMenu();
+
+  // Всплывающий блок PopUp
+  const togglePopUp = () => {
+    const
+      // Блок с PopUp
+      popUp = document.querySelector('.popup'),
+      popupContent = popUp.querySelector('.popup-content'),
+      // Кнопка "Оставить заявку"
+      btnPopUp = document.querySelectorAll('.popup-btn'),
+      // Крестик в PopUp
+      popUpClose = document.querySelector('.popup-close'),
+      width = document.documentElement.clientWidth;
+      
+    let movePopUp,
+      movePopUp2,
+      count = -50;
+
+    // Анимация появления окна
+    const popUpAnimate = () => {
+      movePopUp = requestAnimationFrame(popUpAnimate);
+      popUp.style.display = 'block';
+      if(count < 10){
+        count += 2.5;
+        popupContent.style.top = `${count}%`;
+      } else {
+        cancelAnimationFrame(movePopUp);
+      }
+    };
+
+    // Анимация скрытия окна
+    const popUpAnimate2 = () => {
+      movePopUp2 = requestAnimationFrame(popUpAnimate2);
+      setTimeout(() => {
+        popUp.style.display = 'none';
+      }, 200);
+      if(count > -50){
+        count -= 5;
+        popupContent.style.top = `${count}%`;
+      } else {
+        cancelAnimationFrame(movePopUp2);
+      }
+    };
+    
+    if(width >= 768) {
+      // Появление PopUp окна при нажатии на кнопку  
+      btnPopUp.forEach((elem) => {
+        elem.addEventListener('click', () => {
+          movePopUp = requestAnimationFrame(popUpAnimate);
+        });  
+      });
+      // Закрытие PopUp окна при нажатии на крестик
+      popUpClose.addEventListener('click', () => {  
+        movePopUp2 = requestAnimationFrame(popUpAnimate2);
+      });
+    } else {
+      // Появление PopUp окна при нажатии на кнопку  
+      btnPopUp.forEach((elem) => {
+        elem.addEventListener('click', () => {
+          popUp.style.display = 'block';
+        });  
+      });
+      // Закрытие PopUp окна при нажатии на крестик
+      popUpClose.addEventListener('click', () => {  
+        popUp.style.display = 'none';
+      });
+    }
+  };
+  togglePopUp();
+
+  
 
 
 
