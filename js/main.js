@@ -159,16 +159,18 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   togglePopUp();
 
-  // Плавный переход по якорю
+// Плавный переход по якорю
   const scrollAnchors = () => {
-    const anchors = document.querySelectorAll('a[href^="#"]'); // Все ссылки где есть #
+    // Все ссылки где есть #
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    
     // Перебираем массив
     anchors.forEach((item) => {
       // Отслеживаем событие click
       item.addEventListener('click', (event) => {
         // Сбрасываем стандартное поведение
         event.preventDefault();
-        requestAnimationFrame(step);
+        //requestAnimationFrame(step);
 
         let
           // Скорость прокрутки
@@ -183,17 +185,17 @@ document.addEventListener('DOMContentLoaded', () => {
           start = null; 
 
         function step(time) {
+          // В первый кадр запомним время старта
+          if (start === null) {
+            start = time;
+          }
           let
             // Сколько прошло времени с начала анимации 
             progress = time - start,
             // Текущее положение скролла 
             nowScroll = null; 
             
-          // В первый кадр запомним время старта
-          if (start === null) {
-            start = time;
-          }
-                    // Определяем текущее положение скрола по оси Y
+          // Определяем текущее положение скрола по оси Y
           if (finishScroll < 0) {
             nowScroll = Math.max(startScroll - progress / speed, startScroll + finishScroll);
           } else {
@@ -208,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         requestAnimationFrame(step);
-      });
+      }, false);
     });
   };
   scrollAnchors();
