@@ -62,45 +62,45 @@ document.addEventListener('DOMContentLoaded', () => {
       // Кнопка Меню
       btnMenu = document.querySelector('.menu'),
       // Блок с меню
-      menu = document.querySelector('menu'),
-      // Крестик закрытия окна
-      btnClose = document.querySelector('.close-btn'),
-      // Список меню
-      menuItem = menu.querySelectorAll('ul>li');
+      menu = document.querySelector('menu');
     
     // Функция отселживает translateX
     const handlerMenu = () => {
-      /* if(!menu.style.transform || menu.style.transform === `translateX(-100%)`){
-        menu.style.transform = `translateX(0)`;
-      } else {
-        menu.style.transform = `translateX(-100%)`;
-      } */
+      // Добавляем/Убираем класс active-menu
       menu.classList.toggle('active-menu');
     };
       
-      // Клик по меню
-      btnMenu.addEventListener('click', handlerMenu);
-
-      // Клик по крестику
-      btnClose.addEventListener('click', handlerMenu);
-
-      // Отслеживаем клик по пунктам меню
-      menuItem.forEach((elem) => {
-        elem.addEventListener('click', handlerMenu);
-      });      
+    // Клик по кнопке меню
+    btnMenu.addEventListener('click', handlerMenu);
+    
+    // Отслеживаем нажатие на блок с меню 
+    menu.addEventListener('click', (event) => {
+      let target = event.target;
+      // Если нажали элемент с классом close-btn(крестик) - закрываем окно
+      if(target.classList.contains('close-btn')){
+        handlerMenu();
+      } else {
+        // Иначе target присваиваем тэг li
+        target = target.closest('li');
+        // Если нажали на li закрываем окно
+        if(target){
+          handlerMenu();
+        }
+      }
+    });
   };
   toggleMenu();
 
-  // Всплывающий блок PopUp
+  // Модальное окно PopUp
   const togglePopUp = () => {
     const
-      // Блок с PopUp
+      // Весь блок PopUp
       popUp = document.querySelector('.popup'),
+      // Блок с PopUp
       popupContent = popUp.querySelector('.popup-content'),
       // Кнопка "Оставить заявку"
       btnPopUp = document.querySelectorAll('.popup-btn'),
-      // Крестик в PopUp
-      popUpClose = document.querySelector('.popup-close'),
+      // Ширина окна
       width = document.documentElement.clientWidth;
       
     let movePopUp,
@@ -140,10 +140,24 @@ document.addEventListener('DOMContentLoaded', () => {
           movePopUp = requestAnimationFrame(popUpAnimate);
         });  
       });
-      // Закрытие PopUp окна при нажатии на крестик
-      popUpClose.addEventListener('click', () => {  
-        movePopUp2 = requestAnimationFrame(popUpAnimate2);
+
+      // Отслеживаем клик по PopUp
+      popUp.addEventListener('click', (event) => {
+        let target = event.target;
+        
+        if(target.classList.contains('popup-close')){
+          // Закрытие PopUp окна при нажатии на крестик
+          movePopUp2 = requestAnimationFrame(popUpAnimate2);
+        } else {
+          target = target.closest('.popup-content');
+          
+          if(!target){
+            // Закрытие PopUp окна если кликнули мимо него
+            movePopUp2 = requestAnimationFrame(popUpAnimate2);
+          }
+        }        
       });
+      
     } else {
       // Появление PopUp окна при нажатии на кнопку  
       btnPopUp.forEach((elem) => {
@@ -151,15 +165,28 @@ document.addEventListener('DOMContentLoaded', () => {
           popUp.style.display = 'block';
         });  
       });
-      // Закрытие PopUp окна при нажатии на крестик
-      popUpClose.addEventListener('click', () => {  
-        popUp.style.display = 'none';
-      });
-    }
+
+      // Отслеживаем клик по PopUp
+      popUp.addEventListener('click', (event) => {
+        let target = event.target;
+        
+        if(target.classList.contains('popup-close')){
+          // Закрытие PopUp окна при нажатии на крестик
+          popUp.style.display = 'none';
+        } else {
+          target = target.closest('.popup-content');
+          
+          if(!target){
+            // Закрытие PopUp окна если кликнули мимо него
+            popUp.style.display = 'none';
+          }
+        }        
+      });        
+    }  
   };
   togglePopUp();
 
-// Плавный переход по якорю
+  // Плавный переход по якорю
   const scrollAnchors = () => {
     // Все ссылки где есть #
     const anchors = document.querySelectorAll('a[href^="#"]');
@@ -214,6 +241,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
   scrollAnchors();
+
+  // Табы
+  const tabs = () => {
+    const
+      // Блок с табами
+      tabHeader = document.querySelector('.service-header'),
+      // Табы
+      tab = tabHeader.querySelectorAll('.service-header-tab'),
+      // Контент табов
+      tabContent = document.querySelectorAll('.service-tab');
+
+    // Функция будет менять контент в зависимости от выбранного таба
+    const toggleTabContent = (index) => {
+      for(let i = 0; i < tabContent.length; i++){
+        if(index === i){
+          // Удаляем класс - делаем блок видимым
+          tabContent[i].classList.remove('d-none');
+          // Присваиваем класс - делаем таб активным
+          tab[i].classList.add('active');
+        } else {
+          // Присваиваем класс - делаем блок НЕ видимым
+          tabContent[i].classList.add('d-none');
+          // Удаляем класс - делаем таб НЕ активным
+          tab[i].classList.remove('active');
+        }
+      }
+    }; 
+
+    tabHeader.addEventListener('click', (event) => {
+      // Элемент по которому кликнули
+      let target = event.target;
+      // Присваиваем к target метод closest, который ищет нужный селектор
+      target = target.closest('.service-header-tab');
+
+      // Проверяем есть ли в target что то
+      if(target){
+        // Проверяем на какой Таб кликнули
+        tab.forEach((item, i) => {
+          if(item === target){
+            toggleTabContent(i);  
+          }          
+        });        
+      }      
+    });
+  };
+  tabs();
 
 
 
