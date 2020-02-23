@@ -293,7 +293,32 @@ document.addEventListener('DOMContentLoaded', () => {
       slider = document.getElementById('all-progects'),
       // Каждый слайд
       slide = document.querySelectorAll('.portfolio-item'),
-      // Точки 
+      // Блок с точками
+      dotsBlock = document.querySelector('.portfolio-dots');
+      
+    // Присваиваем перому слайду класс active
+    slide[0].classList.add('portfolio-item-active');
+
+    // Функция добавления точек
+    const addDots = () => {
+      // Проходимся в цикле по слайдам
+      slide.forEach((elem, index) => {
+        // Создаём элемент li
+        const li = document.createElement('li');
+        // Добавляем класс
+        li.classList.add('dot');
+        // Добавляем элемент в блок dotsBlock
+        dotsBlock.appendChild(li);
+
+        // Добавляем первой точке класс active
+        if (index === 0) {
+          li.classList.add('dot-active');
+        }
+      });      
+    };
+    addDots();
+
+    const // Точки 
       dot = document.querySelectorAll('.dot');
 
     // Номер слайда
@@ -304,17 +329,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Функция удаления класса у слайда
     const prevSlide = (elem, index, strClass) => {
       // Берём текущий слайд и удаляем класс
-      elem[index].classList.remove(strClass);
+      elem[index].classList.remove(strClass);  
     };
     // Функция добавления класса у слайда
     const nextSlide = (elem, index, strClass) => {
       // Берём следующий слайд и добавляем класс
       elem[index].classList.add(strClass);
-    };
+    };   
 
     // Функция автоматического перелистывания слайдов
     const autoPlaySlide = () => {
-
       prevSlide(slide, currentSlide, 'portfolio-item-active');
       // Точки
       prevSlide(dot, currentSlide, 'dot-active');
@@ -334,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startSlide = (time = 3000) => {
       interval = setInterval(autoPlaySlide, time);
     };
-    startSlide(1500);
+    startSlide(5000);
 
     // Функция остановки слайдера
     const stopSlide = () => {
