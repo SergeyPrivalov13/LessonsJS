@@ -452,14 +452,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Валидация калькулятора
   const validationCalculator = () => {
-    const calcItem = document.querySelectorAll('.calc-item');
+    const 
+    calcBlock = document.querySelector('.calc-block'),
+    calcItem = calcBlock.querySelectorAll('input');
     console.log(calcItem.value);
     calcItem.forEach((elem) => {
       elem.addEventListener('input', () => {
         elem.value = elem.value.replace(/\D/g, '');  
       });
-    });
-    
+    });  
   };
   validationCalculator();
 
