@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const validationCalculator = () => {
       calcItem.forEach((elem) => {
         elem.addEventListener('input', () => {
-          elem.value = elem.value.replace(/\D/g, '');  
+          elem.value = elem.value.replace(/\D/, '');  
         });
       });  
     };
