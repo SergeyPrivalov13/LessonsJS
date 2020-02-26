@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Выводим результат на страницу
-      total.textContent = result;
+      total.textContent = Math.floor(result);
     };
 
     // Отлавливаем изменение в блоке
