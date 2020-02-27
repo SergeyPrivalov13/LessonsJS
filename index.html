@@ -416,8 +416,8 @@
       selector: '#form2',
       pattern: {
         name: /(^([А-Я]{1})?[а-я]{1,14}$)/,
-        email: /^\w+@\w+\.\w{2,}$/,
-        message: /^[а-я, 0-9]{1,100}$/,
+				email: /^\w+@\w+\.\w{2,}$/,
+				message: /^[а-я\s\.\,\d\!\?]+$/i
       },
       method: {
         'form2-name': [
