@@ -526,9 +526,115 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   calculator(100);
 
+// Ajax - отправка формы
+const sendForm = (formId) => {
+  const
+    errorMessage = 'Что то пошло не так...',
+    loadMessage = 'Загрузка...',
+    successMessage = 'Спасибо! Мы скоро с вами свяжемся!',
+    spiner = document.getElementById('cube-loader'),
+    // Форма
+    form = document.getElementById(formId),
+    // Блок для показа сообщения
+    statusMessage = document.createElement('div');
+    statusMessage.textContent = 'Тут будет сообщение!';
+    statusMessage.style.cssText = `
+      font-size: 2rem;
+      font-family: sans-serif;
+      color: white; 
+    `;
 
+  // Функция запроса на сервер
+  const postData = (body, outputData, errorData) => {
+    // Создаём элемент XMLHttpRequest
+    const request = new XMLHttpRequest();
 
+    // Отслеживаем статус отправки сообщения
+    request.addEventListener('readystatechange', () => {
 
+      if(request.readyState !== 4){
+        return;
+      }
+
+      if(request.status === 200){
+        outputData();        
+      } else {
+        errorData(request.status);      
+      } 
+
+    });
+
+    // Метод отправки и путь к серверу
+    request.open('POST', './server.php');
+
+    // Настройка заголовков
+    //request.setRequestHeader('Content-type', 'multipart/form-data');
+    // Настройка заголовков для формата JSON
+    request.setRequestHeader('Content-type', 'application/json');    
+
+    // Открываем соединение и отправляем данные на сервер
+    //request.send(formData);
+    // Отправляем данные в формате JSON
+    request.send(JSON.stringify(body));
+  };
+
+  // Отслеживаем клик по кнопке
+  form.addEventListener('submit', (event) => {
+    // Запрещаем стандартное поведение кнопки (отправку формы)
+    event.preventDefault();
+    // Добавляем элемент на страницу
+    form.appendChild(statusMessage);
+    // Добавляем сообщение о Загрузке
+    statusMessage.textContent = loadMessage;
+
+    // Объект FormData - содержит данные из формы
+    const formData = new FormData(form);
+    let body = {};
+    /* for(let val of formData.entries()){
+      // Записываем в объект ключ и значение отправленных данных
+      body[val[0]] = val[1];        
+    } 
+    или
+    */
+    formData.forEach((val, key) => {
+      body[key] = val;
+    });
+    //console.log(body);
+    postData(body,
+      () => {
+        statusMessage.textContent = successMessage;
+        form.reset();
+        setTimeout(() => {
+          statusMessage.remove();
+        }, 3000);
+      },
+      (error) => {
+        statusMessage.textContent = errorMessage;
+        console.error(error); 
+      }
+    );  
+  });
+};
+sendForm('form1');
+sendForm('form2');
+sendForm('form3');
+
+// Валидация полей ввода
+const inputValidation = () => {
+  const inputs = document.querySelectorAll('input');
+
+  inputs.forEach(elem => {
+    elem.addEventListener('input', () => {
+      if (elem.type === 'text') {
+          elem.value = elem.value.replace(/[^а-яА-Я ]/, '');
+      }
+      if (elem.type === 'tel') {
+          elem.value = elem.value.replace(/[^\+\d]/, '');
+      }
+    });
+  });
+};
+inputValidation();
 
 
 

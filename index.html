@@ -74,16 +74,26 @@
 					<input type="text" class="form-name" id="form1-name" name="user_name" placeholder="Ваше имя" required>
 				</div>
 				<div class="col-12 col-lg-4">
-					<input type="text" class="form-email" id="form1-email" name="user_email" placeholder="E-mail">
+					<input type="email" class="form-email" id="form1-email" name="user_email" placeholder="E-mail">
 				</div>
 				<div class="col-12 col-lg-4">
-					<input type="text" class="form-phone" id="form1-phone" name="user_phone" placeholder="Номер телефона" required>
+					<input type="tel" class="form-phone" id="form1-phone" name="user_phone" placeholder="Номер телефона" required>
 				</div>
 			</div>
 		</div>
 		<div class="container">
 			<div class="row justify-content-center">
 				<button class="btn form-btn" type="submit">Оставить заявку!</button>
+			</div>
+		</div>
+		<div id="cube-loader">
+			<div class="caption">
+				<div class="cube-loader">
+					<div class="cube loader-1"></div>
+					<div class="cube loader-2"></div>
+					<div class="cube loader-4"></div>
+					<div class="cube loader-3"></div>
+				</div>
 			</div>
 		</div>
 	</form>
@@ -409,40 +419,89 @@
 </div>
 
 <script src="js/main.js"></script>
-<script src="plagins/validator/validator.js"></script>
+<!-- <script src="plagins/validator/validator.js"></script>
 
 <script>
+	const valid1 = new Validator({
+		selector: '#form1',
+		pattern: {
+			name: /(^([А-Я]{1})?[а-я]{1,14}$)/,
+			email: /^\w+@\w+\.\w{2,}$/,
+		},
+		method: {
+			'form1-name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			],
+			'form1-email': [
+			['notEmpty'],
+				['pattern', 'email'],
+			],
+			'form1-phone': [
+			['notEmpty'],
+				['pattern', 'phone'],
+			],
+		}
+	});
+
+	// Запускаем валидатор
+	valid1.init();
+		
 	const valid2 = new Validator({
-      selector: '#form2',
-      pattern: {
-        name: /(^([А-Я]{1})?[а-я]{1,14}$)/,
-				email: /^\w+@\w+\.\w{2,}$/,
-				message: /^[а-я\s\.\,\d\!\?]+$/i
-      },
-      method: {
-        'form2-name': [
-          ['notEmpty'],
-          ['pattern', 'name'],
-        ],
-        'form2-email': [
-        ['notEmpty'],
-          ['pattern', 'email'],
-        ],
-        'form2-phone': [
-        ['notEmpty'],
-          ['pattern', 'phone'],
-        ],
-        'form2-message': [
-        ['notEmpty'],
-          ['pattern', 'message'],
-        ],
-      }
-    });
+		selector: '#form2',
+		pattern: {
+			name: /(^([А-Я]{1})?[а-я]{1,14}$)/,
+			email: /^\w+@\w+\.\w{2,}$/,
+			message: /^[а-я\s\.\,\d\!\?]+$/i
+		},
+		method: {
+			'form2-name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			],
+			'form2-email': [
+			['notEmpty'],
+				['pattern', 'email'],
+			],
+			'form2-phone': [
+			['notEmpty'],
+				['pattern', 'phone'],
+			],
+			'form2-message': [
+			['notEmpty'],
+				['pattern', 'message'],
+			],
+		}
+	});
 
-    // Запускаем валидатор
-    valid2.init();
+	// Запускаем валидатор
+	valid2.init();
+		
+	const popup = new Validator({
+		selector: '#form3',
+		pattern: {
+			name: /(^([А-Я]{1})?[а-я]{1,14}$)/,
+			email: /^\w+@\w+\.\w{2,}$/,
+		},
+		method: {
+			'form3-name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			],
+			'form3-email': [
+			['notEmpty'],
+				['pattern', 'email'],
+			],
+			'form3-phone': [
+			['notEmpty'],
+				['pattern', 'phone'],
+			],
+		}
+	});
+	// Запускаем валидатор
+	popup.init();
 
-</script>
+</script> -->
 
 </body>
 </html>
