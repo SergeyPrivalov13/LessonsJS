@@ -545,37 +545,40 @@ const sendForm = (formId) => {
     `;
 
   // Функция запроса на сервер
-  const postData = (body, outputData, errorData) => {
-    // Создаём элемент XMLHttpRequest
-    const request = new XMLHttpRequest();
+  const postData = (body) => {
+    return new Promise((resolve, reject) => {
 
-    // Отслеживаем статус отправки сообщения
-    request.addEventListener('readystatechange', () => {
-
-      if(request.readyState !== 4){
-        return;
-      }
-
-      if(request.status === 200){
-        outputData();        
-      } else {
-        errorData(request.status);      
-      } 
-
+      // Создаём элемент XMLHttpRequest
+      const request = new XMLHttpRequest();
+  
+      // Отслеживаем статус отправки сообщения
+      request.addEventListener('readystatechange', () => {
+  
+        if(request.readyState !== 4){
+          return;
+        }
+  
+        if(request.status === 200){
+          resolve();        
+        } else {
+          reject(request.status);      
+        } 
+  
+      });
+  
+      // Метод отправки и путь к серверу
+      request.open('POST', './server.php');
+  
+      // Настройка заголовков
+      //request.setRequestHeader('Content-type', 'multipart/form-data');
+      // Настройка заголовков для формата JSON
+      request.setRequestHeader('Content-type', 'application/json');    
+  
+      // Открываем соединение и отправляем данные на сервер
+      //request.send(formData);
+      // Отправляем данные в формате JSON
+      request.send(JSON.stringify(body));
     });
-
-    // Метод отправки и путь к серверу
-    request.open('POST', './server.php');
-
-    // Настройка заголовков
-    //request.setRequestHeader('Content-type', 'multipart/form-data');
-    // Настройка заголовков для формата JSON
-    request.setRequestHeader('Content-type', 'application/json');    
-
-    // Открываем соединение и отправляем данные на сервер
-    //request.send(formData);
-    // Отправляем данные в формате JSON
-    request.send(JSON.stringify(body));
   };
 
   // Отслеживаем клик по кнопке
@@ -600,7 +603,19 @@ const sendForm = (formId) => {
       body[key] = val;
     });
     //console.log(body);
-    postData(body,
+    postData(body)
+      .then(() => {
+        statusMessage.textContent = successMessage;
+        form.reset();
+        setTimeout(() => {
+          statusMessage.remove();
+        }, 3000);
+      })
+      .catch((error) => {
+        statusMessage.textContent = errorMessage;
+        console.error(error); 
+      });
+    /* postData(body,
       () => {
         statusMessage.textContent = successMessage;
         form.reset();
@@ -612,7 +627,7 @@ const sendForm = (formId) => {
         statusMessage.textContent = errorMessage;
         console.error(error); 
       }
-    );  
+    ); */  
   });
 };
 sendForm('form1');
