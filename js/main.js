@@ -546,7 +546,18 @@ const sendForm = (formId) => {
 
   // Функция запроса на сервер
   const postData = (body) => {
-    return new Promise((resolve, reject) => {
+    // Fetch
+    return fetch('./server.php', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(body),
+      credentials: 'include'
+    });
+
+    // Промис
+    /* return new Promise((resolve, reject) => {
 
       // Создаём элемент XMLHttpRequest
       const request = new XMLHttpRequest();
@@ -578,7 +589,7 @@ const sendForm = (formId) => {
       //request.send(formData);
       // Отправляем данные в формате JSON
       request.send(JSON.stringify(body));
-    });
+    }); */
   };
 
   // Отслеживаем клик по кнопке
@@ -604,7 +615,11 @@ const sendForm = (formId) => {
     });
     //console.log(body);
     postData(body)
-      .then(() => {
+      .then((response) => {
+        if(response.status !== 200){
+          throw new Error('status network not 200');
+        }
+        
         statusMessage.textContent = successMessage;
         form.reset();
         setTimeout(() => {
