@@ -8,7 +8,7 @@ const calculator = (price = 100) => {
     // Поле Общая площадь*
     calcSquare = document.querySelector('.calc-square'),
     // Поле Количество помещений
-    calcСount = document.querySelector('.calc-count'),
+    culcCount = document.querySelector('.calc-count'),
     // Поле Срок исполнения
     calcDay = document.querySelector('.calc-day'),
     // Результат
@@ -32,8 +32,8 @@ const calculator = (price = 100) => {
       dayValue = 1;
 
     // Условие для кол-ва помещений
-    if (calcСount.value > 1) {
-      countValue += (calcСount.value - 1) / 10;
+    if (culcCount.value > 1) {
+      countValue += (culcCount.value - 1) / 10;
     }
 
     // Условие для срока исполнения

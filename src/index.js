@@ -1,7 +1,9 @@
-"'use strict'";
+'use strict';
 // Импортируем полифилы
 import "@babel/polyfill";
 import 'nodelist-foreach-polyfill';
+import 'formdata-polyfill';
+import 'fetch-polyfill';
 import elementClosest from 'element-closest';
 elementClosest(window);
 

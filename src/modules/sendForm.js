@@ -55,7 +55,7 @@ const sendForm = (formId) => {
         statusMessage.textContent = successMessage;
         form.reset();
         setTimeout(() => {
-          statusMessage.remove();
+          statusMessage.parentNode.removeChild(statusMessage);
         }, 3000);
       })
       .catch((error) => {
