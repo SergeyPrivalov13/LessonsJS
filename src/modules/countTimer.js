@@ -9,7 +9,8 @@ const countTimer = (deadLine) => {
     timerMinutes = document.getElementById('timer-minutes'),
     // Поле Секунд
     timerSeconds = document.getElementById('timer-seconds');
-  let timers;
+  let timers,
+    countTimer = 0;
 
   // Функция вычисления оставшегося времени
   const getTimeRemaning = () => {
@@ -32,6 +33,7 @@ const countTimer = (deadLine) => {
 
   // Таймер для вызова функции каждую секунду
   const updateClock = () => {
+    countTimer = 1000;
     // Привязываем вызов функции к переменной
     let timer = getTimeRemaning();      
 
@@ -49,7 +51,7 @@ const countTimer = (deadLine) => {
       clearInterval(timers);
     }
   };
-  timers = setInterval(updateClock, 1000);
+  timers = setInterval(updateClock, countTimer);
 };
 
 export default countTimer;
